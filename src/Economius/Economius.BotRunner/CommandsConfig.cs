@@ -7,6 +7,7 @@ namespace Economius.BotRunner
     {
         public SlashCommandProperties[] CommandsInfos { get; } = new[]
         {
+            //Configuration
             SetupServerCommand.CreateCommandInfo(),
             ShowServerSetupCommand.CreateCommandInfo(),
         };

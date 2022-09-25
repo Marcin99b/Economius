@@ -12,11 +12,11 @@ namespace Economius.Infrastructure.Database.MongoDB
     [ExcludeFromCodeCoverage]
     public class MongoSession : ISession
     {
-        private readonly IMongoDatabase _database;
+        private readonly IMongoDatabase database;
 
         public MongoSession(IMongoDatabase database)
         {
-            this._database = database;
+            this.database = database;
         }
 
         public T? Get<T>(Guid id) where T : Entity
@@ -82,7 +82,7 @@ namespace Economius.Infrastructure.Database.MongoDB
 
         private IMongoCollection<T> GetCollection<T>() where T : Entity
         {
-            return this._database.GetCollection<T>($"{typeof(T).Name}s");
+            return this.database.GetCollection<T>($"{typeof(T).Name}s");
         }
     }
 }

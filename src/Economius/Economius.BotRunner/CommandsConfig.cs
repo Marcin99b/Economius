@@ -3,7 +3,12 @@ using Economius.BotRunner.Areas.Configuration.Commands;
 
 namespace Economius.BotRunner
 {
-    public class CommandsConfig
+    public interface ICommandsConfig
+    {
+        SlashCommandProperties[] CommandsInfos { get; }
+    }
+
+    public class CommandsConfig : ICommandsConfig
     {
         public SlashCommandProperties[] CommandsInfos { get; } = new[]
         {

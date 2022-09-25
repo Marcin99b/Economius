@@ -18,7 +18,7 @@ namespace Economius.BotRunner.IoC.Modules
             var entryAssembly = Assembly.GetEntryAssembly()!;
             if (entryAssembly.FullName!.ToLower().Contains("testhost"))
             {
-                var botDllPath = entryAssembly.Location.Replace("testhost.dll", "Watchman.Discord.dll");
+                var botDllPath = entryAssembly.Location.Replace("testhost.dll", "Economius.BotRunner.dll");
                 entryAssembly = Assembly.LoadFrom(botDllPath);
             }
             stack.Push(entryAssembly);
@@ -40,7 +40,7 @@ namespace Economius.BotRunner.IoC.Modules
 
                 foreach (var reference in asm.GetReferencedAssemblies())
                 {
-                    if (!reference.FullName.Contains("Watchman") && !reference.FullName.Contains("Devscord"))
+                    if (!reference.FullName.Contains("Economius"))
                     {
                         continue;
                     }

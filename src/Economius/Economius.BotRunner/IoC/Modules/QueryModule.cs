@@ -18,7 +18,7 @@ namespace Economius.BotRunner.IoC.Modules
             var entryAssembly = Assembly.GetEntryAssembly()!;
             if (entryAssembly.FullName!.ToLower().Contains("testhost"))
             {
-                var botDllPath = entryAssembly.Location.Replace("testhost.dll", "Economius.Discord.dll");
+                var botDllPath = entryAssembly.Location.Replace("testhost.dll", "Economius.BotRunner.dll");
                 entryAssembly = Assembly.LoadFrom(botDllPath);
             }
             stack.Push(entryAssembly);

@@ -9,6 +9,7 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
     public interface IConfigurationController
     {
         Task SetupServer(SocketSlashCommand rawCommand, SetupServerCommand command);
+        Task ShowServerSetup(SocketSlashCommand rawCommand, ShowServerSetupCommand command);
     }
 
     public class ConfigurationController : IConfigurationController
@@ -22,22 +23,34 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
             this.commandBus = commandBus;
         }
 
-        public Task SetupServer(SocketSlashCommand rawCommand, SetupServerCommand command)
+        public async Task SetupServer(SocketSlashCommand rawCommand, SetupServerCommand setupServerCommand)
         {
-            var serverConfiguration = new ServerConfiguration(rawCommand.GuildId!.Value, command.UserStartMoney, command.ServerStartMoney, command.IncomeTaxPercentage);
-            //return this.PrintServerConfiguration(rawCommand);
+            var command = new AddOrUpdateServerConfigurationCommand(
+                rawCommand.GuildId!.Value,
+                setupServerCommand.UserStartMoney,
+                setupServerCommand.ServerStartMoney,
+                setupServerCommand.IncomeTaxPercentage);
+            await this.commandBus.ExecuteAsync(command);
+
+            await this.PrintServerConfiguration(rawCommand);
         }
 
         public Task ShowServerSetup(SocketSlashCommand rawCommand, ShowServerSetupCommand command)
         {
-            //return this.PrintServerConfiguration(rawCommand);
+            return this.PrintServerConfiguration(rawCommand);
         }
-        /*
-        private Task PrintServerConfiguration(SocketSlashCommand rawCommand)
+        
+        private async Task PrintServerConfiguration(SocketSlashCommand rawCommand)
         {
-            if(this.serverConfiguration == null)
+            var serverId = rawCommand.GuildId!.Value;
+            var query = new GetServerConfigurationQuery(serverId);
+            var result = await this.queryBus.ExecuteAsync(query);
+            var serverConfiguration = result.ServerConfiguration;
+
+            if (serverConfiguration == null)
             {
-                return Task.CompletedTask;
+                await rawCommand.RespondAsync("Server is not configured");
+                return;
             }
 
             var embed = new EmbedBuilder()
@@ -46,20 +59,20 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
                 { 
                     new EmbedFieldBuilder()
                         .WithName(SetupServerCommand.Param_UserStartMoney) 
-                        .WithValue(this.serverConfiguration.UserStartMoney),
+                        .WithValue(serverConfiguration.UserStartMoney),
 
                     new EmbedFieldBuilder()
                         .WithName(SetupServerCommand.Param_ServerStartMoney)
-                        .WithValue(this.serverConfiguration.ServerStartMoney),
+                        .WithValue(serverConfiguration.ServerStartMoney),
 
                     new EmbedFieldBuilder()
                         .WithName(SetupServerCommand.Param_IncomeTaxPercentage)
-                        .WithValue(this.serverConfiguration.IncomeTaxPercentage),
+                        .WithValue(serverConfiguration.IncomeTaxPercentage),
                 })
                 .Build();
 
-            return rawCommand.RespondAsync(embed: embed);
+            await rawCommand.RespondAsync(embed: embed);
         }
-        */
+        
     }
 }

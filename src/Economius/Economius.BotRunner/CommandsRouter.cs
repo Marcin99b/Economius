@@ -12,7 +12,6 @@ namespace Economius.BotRunner
         public async Task Route(SocketSlashCommand rawCommand)
         {
             //todo create test that checks if we handle all commands and params
-            
             var task = rawCommand.Data.Name switch
             {
                 SetupServerCommand.CommandName => this.configurationController.SetupServer(rawCommand, new SetupServerCommand() 

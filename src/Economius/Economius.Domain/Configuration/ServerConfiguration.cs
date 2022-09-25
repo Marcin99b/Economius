@@ -1,4 +1,4 @@
-﻿using Economius.Domain.Abstraction;
+﻿using Economius.Infrastructure.Database.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;

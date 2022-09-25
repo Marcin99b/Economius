@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Economius.BotRunner", "Econ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Economius.Domain", "Economius.Domain\Economius.Domain.csproj", "{59C05C09-BEAB-4E3B-98ED-EA69353DEB9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Economius.Infrastructure", "Economius.Infrastructure\Economius.Infrastructure.csproj", "{8A24D0C0-A293-4358-8D97-2813A82AB9DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{59C05C09-BEAB-4E3B-98ED-EA69353DEB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59C05C09-BEAB-4E3B-98ED-EA69353DEB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59C05C09-BEAB-4E3B-98ED-EA69353DEB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A24D0C0-A293-4358-8D97-2813A82AB9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A24D0C0-A293-4358-8D97-2813A82AB9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A24D0C0-A293-4358-8D97-2813A82AB9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A24D0C0-A293-4358-8D97-2813A82AB9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

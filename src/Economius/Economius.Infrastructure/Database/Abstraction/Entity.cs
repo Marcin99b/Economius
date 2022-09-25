@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Economius.Domain.Abstraction
+namespace Economius.Infrastructure.Database.Abstraction
 {
     public abstract class Entity
     {

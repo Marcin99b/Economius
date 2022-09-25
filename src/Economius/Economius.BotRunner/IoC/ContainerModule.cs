@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Economius.BotRunner.IoC.Modules;
 using Economius.Infrastructure.Database.Abstraction;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,8 @@ namespace Economius.BotRunner.IoC
         public ContainerBuilder FillBuilder(ContainerBuilder builder)
         {
             builder.RegisterModule(new DatabaseModule(this.mongoConnectionString));
-            //builder.RegisterModule<CommandModule>();
-            //builder.RegisterModule<QueryModule>();
+            builder.RegisterModule<CommandModule>();
+            builder.RegisterModule<QueryModule>();
             //builder.RegisterModule<ServiceModule>();
             //builder.RegisterModule<ControllerModule>();
             return builder;

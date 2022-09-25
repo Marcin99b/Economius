@@ -4,7 +4,7 @@ using MongoDB.Driver;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Economius.BotRunner.IoC
+namespace Economius.BotRunner.IoC.Modules
 {
     [ExcludeFromCodeCoverage]
     public class DatabaseModule : Autofac.Module

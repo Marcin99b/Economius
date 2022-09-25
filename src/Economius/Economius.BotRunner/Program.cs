@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.Interactions;
 using Discord.Net;
 using Discord.WebSocket;
 using Newtonsoft.Json;
@@ -32,6 +33,29 @@ namespace Economius.BotRunner
 
             _client.Ready += Client_Ready;
             _client.SlashCommandExecuted += SlashCommandHandler;
+
+            _client.ModalSubmitted += async modal =>
+            {
+                // Get the values of components.
+                List<SocketMessageComponentData> components =
+                    modal.Data.Components.ToList();
+                string food = components
+                    .First(x => x.CustomId == "food_name").Value;
+                string reason = components
+                    .First(x => x.CustomId == "food_reason").Value;
+
+                // Build the message to send.
+                string message = "hey @everyone; I just learned " +
+                    $"{modal.User.Mention}'s favorite food is " +
+                    $"{food} because {reason}.";
+
+                // Specify the AllowedMentions so we don't actually ping everyone.
+                AllowedMentions mentions = new AllowedMentions();
+                mentions.AllowedTypes = AllowedMentionTypes.Users;
+
+                // Respond to the modal.
+                await modal.RespondAsync(message, allowedMentions: mentions);
+            };
 
             await Task.Delay(-1);
         }
@@ -67,7 +91,15 @@ namespace Economius.BotRunner
 
         private async Task SlashCommandHandler(SocketSlashCommand command)
         {
-            await command.RespondAsync($"You executed {command.Data.Name}");
+            var json = JsonConvert.SerializeObject(command.Data, Formatting.Indented);
+            //await command.RespondAsync($"```\n{json}\n```");
+            var mb = new ModalBuilder()
+                .WithTitle("Fav Food")
+                .WithCustomId("food_menu")
+                .AddTextInput("What??", "food_name", placeholder: "Pizza")
+                .AddTextInput("Why??", "food_reason", TextInputStyle.Paragraph,
+                    "Kus it's so tasty");
+            await command.RespondWithModalAsync(mb.Build());
         }
     }
 }

@@ -37,6 +37,7 @@ namespace Economius.BotRunner.Areas.Configuration.Commands
                     .WithDescription("Set -1 if you disabled server-start-money.")
                     .WithAutocomplete(true)
                     .WithType(ApplicationCommandOptionType.Integer)
+                    .WithMaxValue(100)
                     .WithRequired(true))
                 .Build();
         }

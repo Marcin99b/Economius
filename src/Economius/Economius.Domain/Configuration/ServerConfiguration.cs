@@ -21,5 +21,35 @@ namespace Economius.Domain.Configuration
             this.ServerStartMoney = serverStartMoney;
             this.IncomeTaxPercentage = incomeTaxPercentage;
         }
+
+        public void SetUserStartMoney(long value)
+        {
+            if(this.UserStartMoney == value)
+            {
+                return;
+            }
+            this.UserStartMoney = value;
+            this.Update();
+        }
+
+        public void SetServerStartMoney(long value)
+        {
+            if (this.ServerStartMoney == value)
+            {
+                return;
+            }
+            this.ServerStartMoney = value;
+            this.Update();
+        }
+
+        public void SetIncomeTaxPercentage(long value)
+        {
+            if (this.IncomeTaxPercentage == value)
+            {
+                return;
+            }
+            this.IncomeTaxPercentage = value;
+            this.Update();
+        }
     }
 }

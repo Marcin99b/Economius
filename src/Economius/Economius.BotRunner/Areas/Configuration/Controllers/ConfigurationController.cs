@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using Economius.BotRunner.Areas.Configuration.Commands;
+using Economius.Cqrs;
 using Economius.Domain.Configuration;
 
 namespace Economius.BotRunner.Areas.Configuration.Controllers
@@ -12,19 +13,26 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
 
     public class ConfigurationController : IConfigurationController
     {
-        private ServerConfiguration serverConfiguration; //todo for test
+        private readonly IQueryBus queryBus;
+        private readonly ICommandBus commandBus;
+
+        public ConfigurationController(IQueryBus queryBus, ICommandBus commandBus)
+        {
+            this.queryBus = queryBus;
+            this.commandBus = commandBus;
+        }
 
         public Task SetupServer(SocketSlashCommand rawCommand, SetupServerCommand command)
         {
-            this.serverConfiguration = new ServerConfiguration(rawCommand.GuildId!.Value, command.UserStartMoney, command.ServerStartMoney, command.IncomeTaxPercentage);
-            return this.PrintServerConfiguration(rawCommand);
+            var serverConfiguration = new ServerConfiguration(rawCommand.GuildId!.Value, command.UserStartMoney, command.ServerStartMoney, command.IncomeTaxPercentage);
+            //return this.PrintServerConfiguration(rawCommand);
         }
 
         public Task ShowServerSetup(SocketSlashCommand rawCommand, ShowServerSetupCommand command)
         {
-            return this.PrintServerConfiguration(rawCommand);
+            //return this.PrintServerConfiguration(rawCommand);
         }
-
+        /*
         private Task PrintServerConfiguration(SocketSlashCommand rawCommand)
         {
             if(this.serverConfiguration == null)
@@ -52,5 +60,6 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
 
             return rawCommand.RespondAsync(embed: embed);
         }
+        */
     }
 }

@@ -19,7 +19,7 @@ namespace Economius.BotRunner
                     ServerStartMoney = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_ServerStartMoney).Value,
                     IncomeTaxPercentage = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_IncomeTaxPercentage).Value
                 }),
-                _ => Task.CompletedTask
+                _ => throw new NotImplementedException()
             };
         }
     }

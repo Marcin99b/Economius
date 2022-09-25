@@ -19,7 +19,7 @@ namespace Economius.Infrastructure.Database.MongoDB
             this._database = database;
         }
 
-        public T Get<T>(Guid id) where T : Entity
+        public T? Get<T>(Guid id) where T : Entity
         {
             return this.Get<T>().FirstOrDefault(x => x.Id == id);
         }

@@ -26,7 +26,7 @@ namespace Economius.Infrastructure.Database.MongoDB
 
         private static void RegisterConventions()
         {
-            ConventionRegistry.Register("DevscordConventions", new MongoConventions(), x => true);
+            ConventionRegistry.Register("EconomiusConventions", new MongoConventions(), x => true);
         }
 
         private class MongoConventions : IConventionPack

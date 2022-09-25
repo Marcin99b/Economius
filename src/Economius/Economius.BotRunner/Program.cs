@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Net;
 using Discord.WebSocket;
+using Economius.BotRunner.IoC;
 using Newtonsoft.Json;
 
 namespace Economius.BotRunner
@@ -10,28 +11,32 @@ namespace Economius.BotRunner
         //todo ioc
         private readonly CommandsConfig commandsConfig;
         private readonly CommandsRouter commandsRouter;
-        private readonly DiscordSocketClient _client;
+        private readonly DiscordSocketClient client;
 
         public Program()
         {
             this.commandsConfig = new CommandsConfig();
             this.commandsRouter = new CommandsRouter();
-            this._client = new DiscordSocketClient();
+            this.client = new DiscordSocketClient();
         }
 
         public static Task Main(string[] args) => new Program().MainAsync(args);
 
         public async Task MainAsync(string[] args)
         {
-            var token = args[0];
+            var token = Environment.GetEnvironmentVariable("discord_token")!;
+            var mongoConnectionString = Environment.GetEnvironmentVariable("economius_mongodb")!;
+            var container = new ContainerModule(mongoConnectionString)
+                .GetBuilder()
+                .Build();
 
-            this._client.Log += this.Log;
+            this.client.Log += this.Log;
 
-            await this._client.LoginAsync(TokenType.Bot, token);
-            await this._client.StartAsync();
+            await this.client.LoginAsync(TokenType.Bot, token);
+            await this.client.StartAsync();
 
-            this._client.Ready += this.Client_Ready;
-            this._client.SlashCommandExecuted += this.SlashCommandHandler;
+            this.client.Ready += this.Client_Ready;
+            this.client.SlashCommandExecuted += this.SlashCommandHandler;
 
             await Task.Delay(-1);
         }
@@ -44,7 +49,7 @@ namespace Economius.BotRunner
 
         private async Task Client_Ready()
         {
-            await this._client.BulkOverwriteGlobalApplicationCommandsAsync(this.commandsConfig.CommandsInfos);
+            await this.client.BulkOverwriteGlobalApplicationCommandsAsync(this.commandsConfig.CommandsInfos);
         }
 
         private Task SlashCommandHandler(SocketSlashCommand command)

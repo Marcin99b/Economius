@@ -54,8 +54,7 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
 
             if (serverConfiguration == null)
             {
-                await rawCommand.RespondAsync("Server is not configured");
-                return new EmptyViewModel();
+                return new EmptyViewModel(message: "Server is not configured");
             }
 
             return new ShowServerSetupViewModel(

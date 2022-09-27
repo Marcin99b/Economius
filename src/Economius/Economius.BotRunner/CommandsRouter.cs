@@ -52,8 +52,8 @@ namespace Economius.BotRunner
             //todo reflection
             var printViewModelTask = viewModel switch
             {
-                var x when x is ShowServerSetupViewModel => this.configurationsViews.ShowServerSetupView(rawCommand, (ShowServerSetupViewModel)viewModel),
-                var x when x is EmptyViewModel => this.commonViews.EmptyView(rawCommand, (EmptyViewModel)viewModel),
+                var x when x is ShowServerSetupViewModel castedModel => this.configurationsViews.ShowServerSetupView(rawCommand, castedModel),
+                var x when x is EmptyViewModel castedModel => this.commonViews.EmptyView(rawCommand, castedModel),
                 _ => throw new NotImplementedException()
             };
         }

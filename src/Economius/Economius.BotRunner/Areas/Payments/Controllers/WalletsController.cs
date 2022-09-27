@@ -12,7 +12,12 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.Controllers
 {
-    public class WalletsController
+    public interface IWalletsController
+    {
+        Task<IViewModel> ShowWallet(SocketSlashCommand rawCommand, ShowWalletCommand showWalletCommand);
+    }
+
+    public class WalletsController : IWalletsController
     {
         private readonly IQueryBus queryBus;
         private readonly ICommandBus commandBus;

@@ -10,7 +10,12 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.Views
 {
-    public class WalletsViews
+    public interface IWalletsViews
+    {
+        Task ShowWalletView(SocketSlashCommand rawCommand, ShowWalletViewModel model);
+    }
+
+    public class WalletsViews : IWalletsViews
     {
         private readonly IEmbedBuildersFactory embedBuildersFactory;
 
@@ -19,11 +24,11 @@ namespace Economius.BotRunner.Areas.Payments.Views
             this.embedBuildersFactory = embedBuildersFactory;
         }
 
-        public Task ShowServerSetupView(SocketSlashCommand rawCommand, ShowWalletViewModel model)
+        public Task ShowWalletView(SocketSlashCommand rawCommand, ShowWalletViewModel model)
         {
             var embed = this.embedBuildersFactory
                 .CreateDefaultEmbedBuilder()
-                .WithTitle("Server configuration")
+                .WithTitle("Wallet")
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()

@@ -41,6 +41,13 @@ namespace Economius.BotRunner.Areas.Commons
         }
     }
 
+    public interface ICommonViews
+    {
+        Task EmptyView(SocketSlashCommand rawCommand, EmptyViewModel model);
+        Task Success(SocketSlashCommand rawCommand, SuccessViewModel model);
+        Task Error(SocketSlashCommand rawCommand, ErrorViewModel model);
+    }
+
     public class CommonViews : ICommonViews
     {
         private readonly IEmbedBuildersFactory embedBuildersFactory;

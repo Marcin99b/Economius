@@ -1,6 +1,8 @@
 ﻿using Discord.WebSocket;
+using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Configuration.Commands;
 using Economius.BotRunner.Areas.Configuration.Controllers;
+using Economius.BotRunner.Areas.Configuration.Views;
 
 namespace Economius.BotRunner
 {
@@ -12,25 +14,46 @@ namespace Economius.BotRunner
     public class CommandsRouter : ICommandsRouter
     {
         //todo ioc
-        private readonly IConfigurationController configurationController;
+        private readonly IConfigurationsController configurationsController;
+        private readonly IConfigurationsViews configurationsViews;
+        private readonly ICommonViews commonViews;
 
-        public CommandsRouter(IConfigurationController configurationController)
+        public CommandsRouter(IConfigurationsController configurationController, 
+            IConfigurationsViews configurationsViews, 
+            ICommonViews commonViews)
         {
-            this.configurationController = configurationController;
+            this.configurationsController = configurationController;
+            this.configurationsViews = configurationsViews;
+            this.commonViews = commonViews;
         }
 
         public async Task Route(SocketSlashCommand rawCommand)
         {
             //todo create test that checks if we handle all commands and params
-            var task = rawCommand.Data.Name switch
+            //todo reflection
+            var getViewModelTask = rawCommand.Data.Name switch
             {
-                SetupServerCommand.CommandName => this.configurationController.SetupServer(rawCommand, new SetupServerCommand()
+                SetupServerCommand.CommandName => this.configurationsController.SetupServer(rawCommand, new SetupServerCommand()
                 {
                     UserStartMoney = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_UserStartMoney).Value,
                     ServerStartMoney = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_ServerStartMoney).Value,
                     IncomeTaxPercentage = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_IncomeTaxPercentage).Value
                 }),
-                ShowServerSetupCommand.CommandName => this.configurationController.ShowServerSetup(rawCommand, new ShowServerSetupCommand()),
+                ShowServerSetupCommand.CommandName => this.configurationsController.ShowServerSetup(rawCommand, new ShowServerSetupCommand()),
+                _ => throw new NotImplementedException()
+            };
+
+            var viewModel = await getViewModelTask;
+            if(viewModel == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            //todo reflection
+            var printViewModelTask = viewModel switch
+            {
+                var x when x is ShowServerSetupViewModel => this.configurationsViews.ShowServerSetupView(rawCommand, (ShowServerSetupViewModel)viewModel),
+                var x when x is EmptyViewModel => this.commonViews.EmptyView(rawCommand, (EmptyViewModel)viewModel),
                 _ => throw new NotImplementedException()
             };
         }

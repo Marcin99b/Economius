@@ -63,6 +63,5 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
                 serverConfiguration.ServerStartMoney,
                 serverConfiguration.IncomeTaxPercentage);
         }
-
     }
 }

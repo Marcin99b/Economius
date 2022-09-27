@@ -1,6 +1,6 @@
 ﻿using Economius.Cqrs;
 
-namespace Economius.Domain.Configuration
+namespace Economius.Domain.Configuration.Cqrs
 {
     public class AddOrUpdateServerConfigurationCommand : ICommand
     {

@@ -5,6 +5,7 @@ using Economius.BotRunner.Areas.Configuration.Commands;
 using Economius.BotRunner.Areas.Configuration.Views;
 using Economius.Cqrs;
 using Economius.Domain.Configuration;
+using Economius.Domain.Configuration.Cqrs;
 
 namespace Economius.BotRunner.Areas.Configuration.Controllers
 {

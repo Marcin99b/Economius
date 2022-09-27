@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-namespace Economius.Domain.Configuration
+namespace Economius.Domain.Configuration.Cqrs
 {
     public class AddOrUpdateServerConfigurationCommandHandler : ICommandHandler<AddOrUpdateServerConfigurationCommand>
     {
@@ -21,7 +21,7 @@ namespace Economius.Domain.Configuration
             using var session = this.sessionFactory.CreateMongo();
 
             var found = session.Get<ServerConfiguration>().FirstOrDefault(x => x.ServerId == command.ServerId);
-            if(found != null)
+            if (found != null)
             {
                 found.SetUserStartMoney(command.UserStartMoney);
                 found.SetServerStartMoney(command.ServerStartMoney);

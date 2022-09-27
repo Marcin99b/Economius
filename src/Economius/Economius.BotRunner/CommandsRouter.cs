@@ -3,6 +3,7 @@ using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Configuration.Commands;
 using Economius.BotRunner.Areas.Configuration.Controllers;
 using Economius.BotRunner.Areas.Configuration.Views;
+using Economius.BotRunner.Areas.Payments.Commands;
 
 namespace Economius.BotRunner
 {
@@ -40,6 +41,7 @@ namespace Economius.BotRunner
                     IncomeTaxPercentage = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_IncomeTaxPercentage).Value
                 }),
                 ShowServerSetupCommand.CommandName => this.configurationsController.ShowServerSetup(rawCommand, new ShowServerSetupCommand()),
+                //ShowWalletCommand.CommandName => 
                 _ => throw new NotImplementedException()
             };
 

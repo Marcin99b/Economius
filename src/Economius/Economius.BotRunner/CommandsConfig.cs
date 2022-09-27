@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Configuration.Commands;
+using Economius.BotRunner.Areas.Payments.Commands;
 
 namespace Economius.BotRunner
 {
@@ -15,6 +16,7 @@ namespace Economius.BotRunner
             //Configuration
             SetupServerCommand.CreateCommandInfo(),
             ShowServerSetupCommand.CreateCommandInfo(),
+            ShowWalletCommand.CreateCommandInfo()
         };
     }
 }

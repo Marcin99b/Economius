@@ -54,9 +54,6 @@ namespace Economius.BotRunner
 
         private Task SlashCommandHandler(SocketSlashCommand command)
         {
-            //todo there may be performance issue
-            var json = JsonConvert.SerializeObject(command.Data, Formatting.Indented);
-            Console.WriteLine(json);
             return this.commandsRouter.Route(command);
         }
     }

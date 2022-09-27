@@ -35,22 +35,21 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
                 setupServerCommand.IncomeTaxPercentage);
             await this.commandBus.ExecuteAsync(command);
 
-            var result = await this.PrintServerConfiguration(rawCommand);
+            var result = this.PrintServerConfiguration(rawCommand);
             return result;
         }
 
-        public async Task<IViewModel> ShowServerSetup(SocketSlashCommand rawCommand, ShowServerSetupCommand command)
+        public Task<IViewModel> ShowServerSetup(SocketSlashCommand rawCommand, ShowServerSetupCommand command)
         {
-            var result = await this.PrintServerConfiguration(rawCommand);
-            return result;
+            var result = this.PrintServerConfiguration(rawCommand);
+            return Task.FromResult(result);
         }
 
-        private async Task<IViewModel> PrintServerConfiguration(SocketSlashCommand rawCommand)
+        private IViewModel PrintServerConfiguration(SocketSlashCommand rawCommand)
         {
             var serverId = rawCommand.GuildId!.Value;
             var query = new GetServerConfigurationQuery(serverId);
-            var result = await this.queryBus.ExecuteAsync(query);
-            var serverConfiguration = result.ServerConfiguration;
+            var serverConfiguration = this.queryBus.Execute(query).ServerConfiguration;
 
             if (serverConfiguration == null)
             {

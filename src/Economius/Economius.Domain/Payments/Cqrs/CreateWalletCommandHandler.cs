@@ -22,7 +22,7 @@ namespace Economius.Domain.Payments.Cqrs
                 //todo log and try prevent
                 return Task.CompletedTask;
             }
-            var wallet = new Wallet(command.ServerId, command.UserId, command.StartBalance);
+            var wallet = new Wallet(command.ServerId, command.UserId);
             return session.AddAsync(wallet);
         }
     }

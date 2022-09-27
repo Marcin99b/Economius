@@ -7,6 +7,7 @@ namespace Economius.BotRunner
     public interface IEconomiusRunner
     {
         Task Run(string token);
+        void ConfigureClient(Action<DiscordSocketClient> action);
     }
 
     public class EconomiusRunner : IEconomiusRunner
@@ -31,7 +32,13 @@ namespace Economius.BotRunner
             this.client.Ready += this.ClientReady;
             this.client.SlashCommandExecuted += this.SlashCommandHandler;
 
+
             await Task.Delay(-1);
+        }
+
+        public void ConfigureClient(Action<DiscordSocketClient> action)
+        {
+            action.Invoke(this.client);
         }
 
         private Task Log(LogMessage msg)

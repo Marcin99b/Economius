@@ -11,13 +11,11 @@ namespace Economius.Domain.Payments.Cqrs
     {
         public ulong ServerId { get; }
         public ulong UserId { get; }
-        public long StartBalance { get; }
 
-        public CreateWalletCommand(ulong serverId, ulong userId, long startBalance)
+        public CreateWalletCommand(ulong serverId, ulong userId)
         {
             this.ServerId = serverId;
             this.UserId = userId;
-            this.StartBalance = startBalance;
         }
     }
 }

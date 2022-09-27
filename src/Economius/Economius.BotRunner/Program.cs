@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Discord.Net;
+using Economius.BotRunner.Areas.Payments.OnEventActions;
 using Economius.BotRunner.IoC;
 using Economius.Infrastructure.Database.MongoDB;
 
@@ -20,6 +21,11 @@ namespace Economius.BotRunner
             MongoConfiguration.Initialize();
 
             var runner = container.Resolve<IEconomiusRunner>();
+
+            //todo reflection
+            var createWalletsOnEventAction = container.Resolve<ICreateWalletsOnEventAction>();
+            runner.ConfigureClient(x => createWalletsOnEventAction.Configure(x));
+
             return runner.Run(token);
         }
     }

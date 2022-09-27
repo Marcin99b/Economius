@@ -2,7 +2,7 @@
 using Economius.Infrastructure.Database;
 using MongoDB.Driver;
 
-namespace Economius.Domain.Configuration.Cqrs
+namespace Economius.Domain.Configurations.Cqrs
 {
     public class GetServerConfigurationQueryHandler : IQueryHandler<GetServerConfigurationQuery, GetServerConfigurationQueryResult>
     {

@@ -31,4 +31,12 @@ namespace Economius.Infrastructure.Database.Abstraction
         {
         }
     }
+
+    public abstract class ImmutableEntity : Entity
+    {
+        public override void Validate()
+        {
+            throw new Exception($"Entity {this.GetType().Name} with ID {this.Id} is invalid. Cannot update immutable entity.");
+        }
+    }
 }

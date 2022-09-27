@@ -1,6 +1,6 @@
 ﻿using Economius.Cqrs;
 
-namespace Economius.Domain.Configuration.Cqrs
+namespace Economius.Domain.Configurations.Cqrs
 {
     public class GetServerConfigurationQueryResult : IQueryResult
     {

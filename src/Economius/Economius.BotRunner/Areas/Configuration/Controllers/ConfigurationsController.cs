@@ -4,8 +4,8 @@ using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Configuration.Commands;
 using Economius.BotRunner.Areas.Configuration.Views;
 using Economius.Cqrs;
-using Economius.Domain.Configuration;
-using Economius.Domain.Configuration.Cqrs;
+using Economius.Domain.Configurations;
+using Economius.Domain.Configurations.Cqrs;
 
 namespace Economius.BotRunner.Areas.Configuration.Controllers
 {

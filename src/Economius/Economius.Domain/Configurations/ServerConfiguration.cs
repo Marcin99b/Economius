@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Economius.Domain.Configuration
+namespace Economius.Domain.Configurations
 {
     public class ServerConfiguration : Entity
     {

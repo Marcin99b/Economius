@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.Commands;
 using Economius.BotRunner.Areas.Payments.Views;

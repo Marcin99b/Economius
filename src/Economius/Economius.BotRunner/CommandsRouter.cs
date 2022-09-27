@@ -52,7 +52,7 @@ namespace Economius.BotRunner
                 ShowServerSetupCommand.CommandName => this.configurationsController.ShowServerSetup(rawCommand, new ShowServerSetupCommand()),
                 ShowWalletCommand.CommandName => this.walletsController.ShowWallet(rawCommand, new ShowWalletCommand()
                 {
-                    User = (dynamic) rawCommand.Data.Options.FirstOrDefault(x => x.Name == ShowWalletCommand.Param_User),
+                    User = (dynamic) rawCommand.Data.Options.FirstOrDefault(x => x.Name == ShowWalletCommand.Param_User)?.Value ?? null,
                 }),
                 _ => throw new NotImplementedException()
             };

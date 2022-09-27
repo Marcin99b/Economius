@@ -1,4 +1,6 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.Rest;
+using Discord.WebSocket;
 using Economius.Cqrs;
 using Economius.Domain.Configurations;
 using Economius.Domain.Configurations.Cqrs;
@@ -51,7 +53,8 @@ namespace Economius.BotRunner.Areas.Payments.OnEventActions
 
         public async Task Run(DiscordSocketClient client, SocketGuild guild)
         {
-            foreach (var user in guild.Users)
+            var users = await guild.GetUsersAsync().FlattenAsync();
+            foreach (var user in users)
             {
                 await this.Run(client, guild.Id, user.Id);
             }

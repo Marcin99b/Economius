@@ -24,19 +24,22 @@ namespace Economius.BotRunner
             var runner = container.Resolve<IEconomiusRunner>();
 
             var assembly = Assembly.GetEntryAssembly()!;
-            var loadableTypes = assembly
-                .GetLoadableTypes()
+            var types = assembly
+                .GetTypes()
                 .Where(x => !x.IsAbstract && x.IsClass);
-            var controllers = loadableTypes
+            var controllers = types
                 .Where(x => x.IsAssignableTo(typeof(IController)))
                 .ToArray();
-            var viewsServices = loadableTypes
+            var viewsServices = types
                 .Where(x => x.IsAssignableTo(typeof(IViewsService)))
                 .ToArray();
+            var botCommands = types
+                .Where(x => x.IsAssignableTo(typeof(IBotCommand)))
+                .ToArray();
+            
+            WorkflowTypesContainer.Inject(container, controllers, viewsServices, botCommands);
 
-            WorkflowTypesContainer.Inject(container, controllers, viewsServices);
-
-            var onEventActions = loadableTypes
+            var onEventActions = types
                 .Where(x => x.IsAssignableTo(typeof(IOnEventAction)))
                 .ToArray();
             foreach (var onEventActionType in onEventActions)

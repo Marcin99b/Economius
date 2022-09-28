@@ -20,29 +20,8 @@ namespace Economius.BotRunner
     {
         public async Task Route(SocketSlashCommand rawCommand)
         {
-            //todo create test that checks if we handle all commands and params
-            //todo reflection
-            var botCommand = rawCommand.Data.Name switch
-            {
-                SetupServerCommand.CommandName => new SetupServerCommand()
-                {
-                    UserStartMoney = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_UserStartMoney).Value,
-                    ServerStartMoney = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_ServerStartMoney).Value,
-                    IncomeTaxPercentage = (dynamic)rawCommand.Data.Options.First(x => x.Name == SetupServerCommand.Param_IncomeTaxPercentage).Value
-                } as IBotCommand,
-                ShowServerSetupCommand.CommandName => new ShowServerSetupCommand() as IBotCommand,
-                ShowWalletCommand.CommandName => new ShowWalletCommand()
-                {
-                    User = (dynamic?) rawCommand.Data.Options.FirstOrDefault(x => x.Name == ShowWalletCommand.Param_User)?.Value,
-                } as IBotCommand,
-                TransactionCommand.CommandName => new TransactionCommand()
-                {
-                    ToUser = (dynamic)rawCommand.Data.Options.First(x => x.Name == TransactionCommand.Param_ToUser).Value,
-                    Amount = (dynamic)rawCommand.Data.Options.First(x => x.Name == TransactionCommand.Param_Amount).Value,
-                    Comment = (dynamic)rawCommand.Data.Options.First(x => x.Name == TransactionCommand.Param_Comment).Value,
-                } as IBotCommand,
-                _ => throw new NotImplementedException()
-            };
+            var arguments = rawCommand.Data.Options.Select(x => (Name: x.Name, Value: x.Value)).ToArray();
+            var botCommand = WorkflowTypesContainer.AutoCreateCommand(rawCommand.Data.Name, arguments) as IBotCommand;
 
             var viewModel = await WorkflowTypesContainer.RunMethodOfCommand(rawCommand, botCommand, rawCommand.Data.Name);
             if(viewModel == null)

@@ -11,6 +11,7 @@ namespace Economius.BotRunner
 
     public class CommandsConfig : ICommandsConfig
     {
+        //todo reflection
         public SlashCommandProperties[] CommandsInfos { get; } = new[]
         {
             //Configuration

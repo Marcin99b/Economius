@@ -34,8 +34,7 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
             var fromUserId = rawCommand.User.Id;
             var toUserId = transactionCommand.ToUser.Id;
 
-            var query = new GetWalletQuery(userServerPair: (serverId, fromUserId));
-            var fromUserWallet = this.queryBus.Execute(query).Wallet;
+            var fromUserWallet = this.queryBus.Execute(new GetWalletQuery(userServerPair: (serverId, fromUserId))).Wallet;
             if(fromUserWallet.Balance < transactionCommand.Amount)
             {
                 return new ErrorViewModel($"User <@{fromUserId}> has not enough balance in wallet.");

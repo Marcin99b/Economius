@@ -1,6 +1,7 @@
 ﻿using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.Commands;
+using Economius.BotRunner.Areas.Payments.Views;
 using Economius.Cqrs;
 using Economius.Domain.Payments.Cqrs;
 using System;
@@ -39,6 +40,8 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
             //todo performance
             await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, fromUserId));
             await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, toUserId));
+
+            return new TransactionViewModel(fromUserId, toUserId, transactionCommand.Amount, transactionCommand.Comment);
         }
     }
 }

@@ -15,13 +15,15 @@ namespace Economius.Domain.Payments.Cqrs
         public ulong FromUserId { get; }
         public ulong ToUserId { get; }
         public long Amount { get; }
+        public string Comment { get; set; }
 
-        public CreateTransactionCommand(ulong serverId, ulong fromUserId, ulong toUserId, long amount)
+        public CreateTransactionCommand(ulong serverId, ulong fromUserId, ulong toUserId, long amount, string comment)
         {
             this.ServerId = serverId;
             this.FromUserId = fromUserId;
             this.ToUserId = toUserId;
             this.Amount = amount;
+            this.Comment = comment;
         }
     }
 
@@ -37,7 +39,7 @@ namespace Economius.Domain.Payments.Cqrs
         public Task HandleAsync(CreateTransactionCommand command)
         {
             using var session = this.sessionFactory.CreateMongo();
-            var transaction = new Transaction(command.ServerId, command.FromUserId, command.ToUserId, command.Amount);
+            var transaction = new Transaction(command.ServerId, command.FromUserId, command.ToUserId, command.Amount, command.Comment);
             return session.AddAsync(transaction);
         }
     }
@@ -69,10 +71,8 @@ namespace Economius.Domain.Payments.Cqrs
             {
                 throw new ArgumentException($"Transaction with id {command.TransactionId} does not exist");
             }
-            var revertedTransaction = new Transaction(found.ServerId, found.ToUserId, found.FromUserId, found.Amount);
+            var revertedTransaction = new Transaction(found.ServerId, found.ToUserId, found.FromUserId, found.Amount, found.Comment);
             return session.AddAsync(revertedTransaction);
         }
     }
-
-    
 }

@@ -28,6 +28,7 @@ namespace Economius.BotRunner.Areas.Payments.Commands
                     .WithName(Param_Amount)
                     .WithDescription("Select amount.")
                     .WithType(ApplicationCommandOptionType.Integer)
+                    .WithMinValue(1)
                     .WithRequired(true))
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName(Param_Comment)

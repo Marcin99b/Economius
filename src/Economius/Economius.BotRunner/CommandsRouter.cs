@@ -19,26 +19,6 @@ namespace Economius.BotRunner
 
     public class CommandsRouter : ICommandsRouter
     {
-        //todo ioc
-        private readonly IConfigurationsController configurationsController;
-        private readonly IConfigurationsViews configurationsViews;
-        private readonly IWalletsController walletsController;
-        private readonly IWalletsViews walletsViews;
-        private readonly ICommonViews commonViews;
-
-        public CommandsRouter(IConfigurationsController configurationController, 
-            IConfigurationsViews configurationsViews, 
-            IWalletsController walletsController,
-            IWalletsViews walletsViews,
-            ICommonViews commonViews)
-        {
-            this.configurationsController = configurationController;
-            this.configurationsViews = configurationsViews;
-            this.walletsController = walletsController;
-            this.walletsViews = walletsViews;
-            this.commonViews = commonViews;
-        }
-
         public async Task Route(SocketSlashCommand rawCommand)
         {
             //todo create test that checks if we handle all commands and params
@@ -123,11 +103,11 @@ namespace Economius.BotRunner
         
         public static Task<IViewModel> RunMethodOfCommand(SocketSlashCommand slashCommand, IBotCommand command, string commandName)
         {
-            foreach (var commandMethod in generatedControllersMethods)
+            foreach (var (CommandName, Function) in generatedControllersMethods)
             {
-                if(commandMethod.CommandName == commandName)
+                if(CommandName == commandName)
                 {
-                    return commandMethod.Function.Invoke(slashCommand, command);
+                    return Function.Invoke(slashCommand, command);
                 }
             }
             throw new NotImplementedException();
@@ -135,11 +115,11 @@ namespace Economius.BotRunner
 
         public static Task RunViewOfModel(SocketSlashCommand slashCommand, IViewModel model, string viewName)
         {
-            foreach (var viewMethod in generatedViewsMethods)
+            foreach (var (ViewName, Function) in generatedViewsMethods)
             {
-                if (viewMethod.ViewName == viewName)
+                if (ViewName == viewName)
                 {
-                    return viewMethod.Function.Invoke(slashCommand, model);
+                    return Function.Invoke(slashCommand, model);
                 }
             }
             throw new NotImplementedException();

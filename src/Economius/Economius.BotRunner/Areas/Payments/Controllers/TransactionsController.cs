@@ -28,6 +28,7 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
             this.commandBus = commandBus;
         }
 
+        //todo prevent transactions that will cause wallet under 0 balance
         public async Task<IViewModel> Transaction(SocketSlashCommand rawCommand, TransactionCommand transactionCommand)
         {
             var serverId = rawCommand.GuildId!.Value;

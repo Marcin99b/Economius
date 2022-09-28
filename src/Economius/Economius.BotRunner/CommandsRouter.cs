@@ -34,7 +34,13 @@ namespace Economius.BotRunner
                 ShowServerSetupCommand.CommandName => new ShowServerSetupCommand() as IBotCommand,
                 ShowWalletCommand.CommandName => new ShowWalletCommand()
                 {
-                    User = (dynamic?) rawCommand.Data.Options.FirstOrDefault(x => x.Name == ShowWalletCommand.Param_User)?.Value ?? null,
+                    User = (dynamic?) rawCommand.Data.Options.FirstOrDefault(x => x.Name == ShowWalletCommand.Param_User)?.Value,
+                } as IBotCommand,
+                TransactionCommand.CommandName => new TransactionCommand()
+                {
+                    ToUser = (dynamic)rawCommand.Data.Options.First(x => x.Name == TransactionCommand.Param_ToUser).Value,
+                    Amount = (dynamic)rawCommand.Data.Options.First(x => x.Name == TransactionCommand.Param_Amount).Value,
+                    Comment = (dynamic)rawCommand.Data.Options.First(x => x.Name == TransactionCommand.Param_Comment).Value,
                 } as IBotCommand,
                 _ => throw new NotImplementedException()
             };

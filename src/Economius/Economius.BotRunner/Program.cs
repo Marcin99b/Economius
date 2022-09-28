@@ -11,9 +11,7 @@ namespace Economius.BotRunner
 {
     public class Program
     {
-        public static Task Main(string[] args) => new Program().MainAsync(args);
-
-        public Task MainAsync(string[] args)
+        public static Task Main()
         {
             var token = Environment.GetEnvironmentVariable("discord_token")!;
             var mongoConnectionString = Environment.GetEnvironmentVariable("economius_mongodb")!;

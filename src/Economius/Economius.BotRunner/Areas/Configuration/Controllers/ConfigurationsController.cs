@@ -30,8 +30,6 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
         {
             var command = new AddOrUpdateServerConfigurationCommand(
                 rawCommand.GuildId!.Value,
-                setupServerCommand.UserStartMoney,
-                setupServerCommand.ServerStartMoney,
                 setupServerCommand.IncomeTaxPercentage);
             await this.commandBus.ExecuteAsync(command);
 
@@ -57,8 +55,6 @@ namespace Economius.BotRunner.Areas.Configuration.Controllers
             }
 
             return new ShowServerSetupViewModel(
-                serverConfiguration.UserStartMoney,
-                serverConfiguration.ServerStartMoney,
                 serverConfiguration.IncomeTaxPercentage);
         }
     }

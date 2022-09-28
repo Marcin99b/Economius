@@ -23,12 +23,10 @@ namespace Economius.Domain.Configurations.Cqrs
             var found = session.Get<ServerConfiguration>().FirstOrDefault(x => x.ServerId == command.ServerId);
             if (found != null)
             {
-                found.SetUserStartMoney(command.UserStartMoney);
-                found.SetServerStartMoney(command.ServerStartMoney);
                 found.SetIncomeTaxPercentage(command.IncomeTaxPercentage);
                 return session.UpdateAsync(found);
             }
-            var serverConfiguration = new ServerConfiguration(command.ServerId, command.UserStartMoney, command.ServerStartMoney, command.IncomeTaxPercentage);
+            var serverConfiguration = new ServerConfiguration(command.ServerId, command.IncomeTaxPercentage);
             return session.AddAsync(serverConfiguration);
         }
     }

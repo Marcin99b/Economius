@@ -33,12 +33,6 @@ namespace Economius.BotRunner.Areas.Configuration.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName(SetupServerCommand.Param_UserStartMoney) //todo translation
-                        .WithValue(model.UserStartMoney).WithIsInline(true),
-                    new EmbedFieldBuilder()
-                        .WithName(SetupServerCommand.Param_ServerStartMoney)
-                        .WithValue(model.ServerStartMoney).WithIsInline(true),
-                    new EmbedFieldBuilder()
                         .WithName(SetupServerCommand.Param_IncomeTaxPercentage)
                         .WithValue(model.IncomeTaxPercentage + "%").WithIsInline(true),
                 })

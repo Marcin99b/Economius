@@ -7,6 +7,7 @@ using Economius.Domain.Configurations;
 using Economius.Domain.Configurations.Cqrs;
 using Economius.Domain.Payments.Cqrs;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,7 +64,7 @@ namespace Economius.BotRunner.Areas.Payments.OnEventActions
         public async Task Run(DiscordSocketClient client, ulong serverId, ulong userId)
         {
             var command = new CreateWalletCommand(serverId, userId);
-            await this.commandBus.ExecuteAsync(command);
+            await this.commandBus.AddToSingleThreadQueue(command);
         }
     }
 }

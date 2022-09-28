@@ -11,7 +11,7 @@ namespace Economius.Domain.Payments.Services
     {
         long Calculate(IEnumerable<Transaction> transactions);
         long Calculate(ulong serverId, DateTime fromDateTime, ulong fromUserId, ulong toUserId, IEnumerable<Transaction> transactions);
-        long Difference(IEnumerable<Transaction> oldTransactions, IEnumerable<Transaction> newTransactions);
+        long Difference(IEnumerable<Transaction> from, IEnumerable<Transaction> to);
     }
 
     public class TransactionsSumCalculator : ITransactionsSumCalculator
@@ -56,11 +56,11 @@ namespace Economius.Domain.Payments.Services
             return sum;
         }
 
-        public long Difference(IEnumerable<Transaction> oldTransactions, IEnumerable<Transaction> newTransactions)
+        public long Difference(IEnumerable<Transaction> from, IEnumerable<Transaction> to)
         {
-            var oldSum = this.Calculate(oldTransactions);
-            var newSum = this.Calculate(newTransactions);
-            return newSum - oldSum;
+            var fromSum = this.Calculate(from);
+            var toSum = this.Calculate(to);
+            return toSum - fromSum;
         }
     }
 }

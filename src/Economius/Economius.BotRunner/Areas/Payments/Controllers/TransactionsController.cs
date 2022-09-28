@@ -11,7 +11,12 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.Controllers
 {
-    public class TransactionsController
+    public interface ITransactionsController : IController
+    {
+        Task<IViewModel> Transaction(SocketSlashCommand rawCommand, TransactionCommand transactionCommand);
+    }
+
+    public class TransactionsController : ITransactionsController
     {
         private readonly IQueryBus queryBus;
         private readonly ICommandBus commandBus;
@@ -30,6 +35,10 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
 
             var command = new CreateTransactionCommand(serverId, fromUserId, toUserId, transactionCommand.Amount, transactionCommand.Comment);
             await this.commandBus.ExecuteAsync(command);
+
+            //todo performance
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, fromUserId));
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, toUserId));
         }
     }
 }

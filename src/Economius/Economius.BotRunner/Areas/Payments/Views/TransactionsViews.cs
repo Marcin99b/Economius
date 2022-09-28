@@ -27,10 +27,10 @@ namespace Economius.BotRunner.Areas.Payments.Views
                 {
                     new EmbedFieldBuilder()
                         .WithName("From user") //todo translation
-                        .WithValue($"<@{model.FromUserId}>").WithIsInline(true),
+                        .WithValue(this.GetUserText(model.FromUserId)).WithIsInline(true),
                     new EmbedFieldBuilder()
                         .WithName("To user")
-                        .WithValue($"<@{model.ToUserId}>").WithIsInline(true),
+                        .WithValue(this.GetUserText(model.ToUserId)).WithIsInline(true),
                     new EmbedFieldBuilder()
                         .WithName("Amount")
                         .WithValue(model.Amount).WithIsInline(false),
@@ -41,6 +41,15 @@ namespace Economius.BotRunner.Areas.Payments.Views
                 .Build();
 
             return rawCommand.RespondAsync(embed: embed);
+        }
+
+        private string GetUserText(ulong id)
+        {
+            if(id == 0)
+            {
+                return "SERVER";
+            }
+            return $"<@{id}>";
         }
     }
 }

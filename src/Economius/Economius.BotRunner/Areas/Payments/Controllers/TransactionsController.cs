@@ -49,5 +49,22 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
 
             return new TransactionViewModel(fromUserId, toUserId, transactionCommand.Amount, transactionCommand.Comment);
         }
+
+        public async Task<IViewModel> IncreaseServerBalance(SocketSlashCommand rawCommand, IncreaseServerBalanceCommand increaseServerBalanceCommand)
+        {
+            var serverId = rawCommand.GuildId!.Value;
+            var serverWallet = this.queryBus.Execute(new GetWalletQuery(userServerPair: (serverId, 0))).Wallet;
+            if (serverWallet.Balance + increaseServerBalanceCommand.Amount < 0)
+            {
+                return new ErrorViewModel($"Server has not enough balance in wallet.");
+            }
+            // todo generate by outside template
+            var comment = $"Server balance insreased by {increaseServerBalanceCommand.Amount}. Action performed by user <@{rawCommand.User.Id}>.";
+            var command = new CreateTransactionCommand(serverId, 0, 0, increaseServerBalanceCommand.Amount, comment);
+            await this.commandBus.ExecuteAsync(command);
+
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, 0));
+            return new TransactionViewModel(0, 0, increaseServerBalanceCommand.Amount, comment);
+        }
     }
 }

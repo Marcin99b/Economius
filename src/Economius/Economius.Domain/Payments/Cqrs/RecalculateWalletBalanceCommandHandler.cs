@@ -20,8 +20,18 @@ namespace Economius.Domain.Payments.Cqrs
         {
             using var session = this.sessionFactory.CreateMongo();
 
-            var sentTransactions = session.Get<Transaction>().Where(x => x.ServerId == command.ServerId && x.FromUserId == command.UserId);
-            var receivedTransactions = session.Get<Transaction>().Where(x => x.ServerId == command.ServerId && x.ToUserId == command.UserId);
+            var sentTransactions = session
+                .Get<Transaction>()
+                .Where(x => 
+                    x.ServerId == command.ServerId 
+                    && x.FromUserId == command.UserId 
+                    && !x.IsServerIncreaseBalanceTransaction);
+            var receivedTransactions = session
+                .Get<Transaction>()
+                .Where(x => 
+                    x.ServerId == command.ServerId 
+                    && x.ToUserId == command.UserId);
+
             var difference = this.transactionsSumCalculator.Difference(sentTransactions, receivedTransactions);
 
             var wallet = session.Get<Wallet>().First(x => x.ServerId == command.ServerId && x.UserId == command.UserId);

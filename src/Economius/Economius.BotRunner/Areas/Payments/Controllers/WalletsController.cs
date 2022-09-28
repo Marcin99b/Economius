@@ -16,6 +16,7 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
     public interface IWalletsController : IController
     {
         Task<IViewModel> ShowWallet(SocketSlashCommand rawCommand, ShowWalletCommand showWalletCommand);
+        Task<IViewModel> ShowServerWallet(SocketSlashCommand rawCommand, ShowServerWalletCommand showServerWalletCommand);
     }
 
     public class WalletsController : IWalletsController
@@ -33,6 +34,14 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
         {
             var userId = showWalletCommand.User?.Id ?? rawCommand.User.Id;
             var query = new GetWalletQuery(userServerPair: (rawCommand.GuildId!.Value, userId));
+            var wallet = this.queryBus.Execute(query).Wallet!; //wallet must exist always
+            IViewModel result = new ShowWalletViewModel(wallet.UserId, wallet.Balance);
+            return Task.FromResult(result);
+        }
+
+        public Task<IViewModel> ShowServerWallet(SocketSlashCommand rawCommand, ShowServerWalletCommand showServerWalletCommand)
+        {
+            var query = new GetWalletQuery(userServerPair: (rawCommand.GuildId!.Value, 0));
             var wallet = this.queryBus.Execute(query).Wallet!; //wallet must exist always
             IViewModel result = new ShowWalletViewModel(wallet.UserId, wallet.Balance);
             return Task.FromResult(result);

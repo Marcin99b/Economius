@@ -15,6 +15,7 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
     public interface ITransactionsController : IController
     {
         Task<IViewModel> Transaction(SocketSlashCommand rawCommand, TransactionCommand transactionCommand);
+        Task<IViewModel> IncreaseServerBalance(SocketSlashCommand rawCommand, IncreaseServerBalanceCommand increaseServerBalanceCommand);
     }
 
     public class TransactionsController : ITransactionsController

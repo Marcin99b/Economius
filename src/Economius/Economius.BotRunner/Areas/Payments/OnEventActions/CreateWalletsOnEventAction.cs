@@ -6,6 +6,7 @@ using Economius.Cqrs;
 using Economius.Domain.Configurations;
 using Economius.Domain.Configurations.Cqrs;
 using Economius.Domain.Payments.Cqrs;
+using MongoDB.Driver.Core.Servers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,6 +55,10 @@ namespace Economius.BotRunner.Areas.Payments.OnEventActions
 
         public async Task Run(DiscordSocketClient client, SocketGuild guild)
         {
+            //setup server wallet
+            var command = new CreateWalletCommand(guild.Id, 0);
+            await this.commandBus.AddToSingleThreadQueue(command);
+
             var users = await guild.GetUsersAsync().FlattenAsync();
             foreach (var user in users)
             {

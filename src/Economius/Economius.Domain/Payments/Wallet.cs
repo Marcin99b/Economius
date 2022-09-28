@@ -12,11 +12,16 @@ namespace Economius.Domain.Payments
         public ulong ServerId { get; private set; }
         public ulong UserId { get; private set; }
         public long Balance { get; private set; }
+        public bool IsServerWallet { get; private set; }
 
         public Wallet(ulong serverId, ulong userId)
         {
             this.ServerId = serverId;
             this.UserId = userId;
+            if(userId == 0)
+            {
+                this.IsServerWallet = true;
+            }
         }
 
         public void SetBalance(long value)

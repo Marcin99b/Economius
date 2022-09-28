@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Economius.BotRunner.Areas.Commons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.Commands
 {
-    public class ShowWalletCommand
+    public class ShowWalletCommand : IBotCommand
     {
         public const string CommandName = "show-wallet";
 

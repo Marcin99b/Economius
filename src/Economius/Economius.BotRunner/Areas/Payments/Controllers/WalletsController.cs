@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.Controllers
 {
-    public interface IWalletsController
+    public interface IWalletsController : IController
     {
         Task<IViewModel> ShowWallet(SocketSlashCommand rawCommand, ShowWalletCommand showWalletCommand);
     }

@@ -41,7 +41,7 @@ namespace Economius.BotRunner.Areas.Commons
         }
     }
 
-    public interface ICommonViews
+    public interface ICommonViews : IViewsService
     {
         Task EmptyView(SocketSlashCommand rawCommand, EmptyViewModel model);
         Task Success(SocketSlashCommand rawCommand, SuccessViewModel model);

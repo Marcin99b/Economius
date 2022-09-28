@@ -9,7 +9,7 @@ using Economius.Domain.Configurations.Cqrs;
 
 namespace Economius.BotRunner.Areas.Configuration.Controllers
 {
-    public interface IConfigurationsController
+    public interface IConfigurationsController : IController
     {
         Task<IViewModel> SetupServer(SocketSlashCommand rawCommand, SetupServerCommand setupServerCommand);
         Task<IViewModel> ShowServerSetup(SocketSlashCommand rawCommand, ShowServerSetupCommand command);

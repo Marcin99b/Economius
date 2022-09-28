@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
+using Economius.BotRunner.Areas.Commons;
 using Economius.Cqrs;
 using Economius.Domain.Configurations;
 using Economius.Domain.Configurations.Cqrs;
@@ -13,9 +14,8 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.OnEventActions
 {
-    public interface ICreateWalletsOnEventAction
+    public interface ICreateWalletsOnEventAction : IOnEventAction
     {
-        void Configure(DiscordSocketClient client);
         Task Run(DiscordSocketClient client);
         Task Run(DiscordSocketClient client, SocketGuild guild);
         Task Run(DiscordSocketClient client, ulong serverId, ulong userId);

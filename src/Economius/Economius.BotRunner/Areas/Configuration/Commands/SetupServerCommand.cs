@@ -1,8 +1,9 @@
 ﻿using Discord;
+using Economius.BotRunner.Areas.Commons;
 
 namespace Economius.BotRunner.Areas.Configuration.Commands
 {
-    public class SetupServerCommand
+    public class SetupServerCommand : IBotCommand
     {
         public const string CommandName = "setup-server";
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Payments.Views
 {
-    public interface IWalletsViews
+    public interface IWalletsViews : IViewsService
     {
         Task ShowWalletView(SocketSlashCommand rawCommand, ShowWalletViewModel model);
     }

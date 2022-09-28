@@ -1,8 +1,11 @@
 ﻿using Autofac;
+using Autofac.Util;
 using Discord.Net;
+using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.OnEventActions;
 using Economius.BotRunner.IoC;
 using Economius.Infrastructure.Database.MongoDB;
+using System.Reflection;
 
 namespace Economius.BotRunner
 {
@@ -22,9 +25,27 @@ namespace Economius.BotRunner
 
             var runner = container.Resolve<IEconomiusRunner>();
 
-            //todo reflection
-            var createWalletsOnEventAction = container.Resolve<ICreateWalletsOnEventAction>();
-            runner.ConfigureClient(x => createWalletsOnEventAction.Configure(x));
+            var assembly = Assembly.GetEntryAssembly()!;
+            var loadableTypes = assembly
+                .GetLoadableTypes()
+                .Where(x => !x.IsAbstract && x.IsClass);
+            var controllers = loadableTypes
+                .Where(x => x.IsAssignableTo(typeof(IController)))
+                .ToArray();
+            var viewsServices = loadableTypes
+                .Where(x => x.IsAssignableTo(typeof(IViewsService)))
+                .ToArray();
+
+            WorkflowTypesContainer.Inject(container, controllers, viewsServices);
+
+            var onEventActions = loadableTypes
+                .Where(x => x.IsAssignableTo(typeof(IOnEventAction)))
+                .ToArray();
+            foreach (var onEventActionType in onEventActions)
+            {
+                var instance = (IOnEventAction)container.Resolve(onEventActionType);
+                runner.ConfigureClient(x => instance.Configure(x));
+            }
 
             return runner.Run(token);
         }

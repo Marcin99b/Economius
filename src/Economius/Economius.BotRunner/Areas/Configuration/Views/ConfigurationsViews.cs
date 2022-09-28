@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Economius.BotRunner.Areas.Configuration.Views
 {
-    public interface IConfigurationsViews
+    public interface IConfigurationsViews : IViewsService
     {
         Task ShowServerSetupView(SocketSlashCommand rawCommand, ShowServerSetupViewModel model);
     }

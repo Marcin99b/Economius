@@ -18,10 +18,10 @@ namespace Economius.Domain.Payments.Cqrs
             using var session = this.sessionFactory.CreateMongo();
             if(query.Id.HasValue)
             {
-                return new GetWalletQueryResult(session.Get<Wallet>(query.Id.Value));
+                return new GetWalletQueryResult(session.Get<Wallet>(query.Id.Value)!);
             }
             var pair = query.UserServerPair!.Value;
-            var result = session.Get<Wallet>().FirstOrDefault(x => x.ServerId == pair.ServerId && x.UserId == pair.UserId);
+            var result = session.Get<Wallet>().First(x => x.ServerId == pair.ServerId && x.UserId == pair.UserId);
             return new GetWalletQueryResult(result);
         }
     }

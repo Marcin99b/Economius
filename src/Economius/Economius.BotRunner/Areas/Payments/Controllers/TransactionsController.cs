@@ -28,12 +28,18 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
             this.commandBus = commandBus;
         }
 
-        //todo prevent transactions that will cause wallet under 0 balance
         public async Task<IViewModel> Transaction(SocketSlashCommand rawCommand, TransactionCommand transactionCommand)
         {
             var serverId = rawCommand.GuildId!.Value;
             var fromUserId = rawCommand.User.Id;
             var toUserId = transactionCommand.ToUser.Id;
+
+            var query = new GetWalletQuery(userServerPair: (serverId, fromUserId));
+            var fromUserWallet = this.queryBus.Execute(query).Wallet;
+            if(fromUserWallet.Balance < transactionCommand.Amount)
+            {
+                return new ErrorViewModel($"User <@{fromUserId}> has not enough balance in wallet.");
+            }
 
             var command = new CreateTransactionCommand(serverId, fromUserId, toUserId, transactionCommand.Amount, transactionCommand.Comment);
             await this.commandBus.ExecuteAsync(command);

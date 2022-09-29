@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Configuration.Commands;
 using Economius.BotRunner.Areas.Payments.Commands;
-using Economius.BotRunner.Areas.Shops.Commands;
+using Economius.BotRunner.Areas.Shopping.Commands;
 
 namespace Economius.BotRunner
 {

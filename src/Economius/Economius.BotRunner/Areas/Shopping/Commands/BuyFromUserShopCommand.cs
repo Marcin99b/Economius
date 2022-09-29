@@ -1,29 +1,31 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Commons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Economius.BotRunner.Areas.Shops.Commands
+namespace Economius.BotRunner.Areas.Shopping.Commands
 {
-    public class ShowUserShopCommand : IBotCommand
+    public class BuyFromUserShopCommand : IBotCommand
     {
-        public const string CommandName = "show-user-shop";
+        public const string CommandName = "buy-from-user-shop";
 
         public IUser User { get; set; }
         public const string Param_User = "user";
+        public string Product { get; set; }
+        public const string Param_Product = "product";
 
         public static SlashCommandProperties CreateCommandInfo()
         {
             return new SlashCommandBuilder()
                 .WithName(CommandName)
-                .WithDescription("Show user shop.")
+                .WithDescription("Buy from user shop.")
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName(Param_User)
                     .WithDescription("Select user.")
                     .WithType(ApplicationCommandOptionType.User)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName(Param_Product)
+                    .WithDescription("Select product.")
+                    .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
                 .Build();
         }

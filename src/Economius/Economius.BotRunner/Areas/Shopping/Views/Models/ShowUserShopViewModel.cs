@@ -1,7 +1,7 @@
 ﻿using Economius.BotRunner.Areas.Commons;
 using Economius.Domain.Shopping;
 
-namespace Economius.BotRunner.Areas.Shops.Views.Models
+namespace Economius.BotRunner.Areas.Shopping.Views.Models
 {
     public class ShowUserShopViewModel : IViewModel
     {

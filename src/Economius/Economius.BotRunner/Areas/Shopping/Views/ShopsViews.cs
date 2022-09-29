@@ -2,7 +2,7 @@
 using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.Commands;
-using Economius.BotRunner.Areas.Shops.Views.Models;
+using Economius.BotRunner.Areas.Shopping.Views.Models;
 using Economius.Domain.Shopping;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Economius.BotRunner.Areas.Shops.Views
+namespace Economius.BotRunner.Areas.Shopping.Views
 {
     public interface IShopsViews : IViewsService
     {

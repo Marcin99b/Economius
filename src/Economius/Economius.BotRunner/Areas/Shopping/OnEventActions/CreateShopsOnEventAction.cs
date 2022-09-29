@@ -8,7 +8,7 @@ using Economius.Domain.Payments;
 using Economius.Domain.Payments.Cqrs;
 using Economius.Domain.Shopping.Cqrs;
 
-namespace Economius.BotRunner.Areas.Shops.OnEventActions
+namespace Economius.BotRunner.Areas.Shopping.OnEventActions
 {
     public interface ICreateShopsOnEventAction : IOnEventAction
     {

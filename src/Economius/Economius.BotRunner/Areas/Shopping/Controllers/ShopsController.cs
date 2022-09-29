@@ -1,10 +1,10 @@
 ﻿using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
-using Economius.BotRunner.Areas.Shops.Commands;
+using Economius.BotRunner.Areas.Shopping.Commands;
 using Economius.Cqrs;
 using Economius.Domain.Shopping.Cqrs;
 
-namespace Economius.BotRunner.Areas.Shops.Controllers
+namespace Economius.BotRunner.Areas.Shopping.Controllers
 {
     public interface IShopsController : IController
     {

@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Commons;
 
-namespace Economius.BotRunner.Areas.Shops.Commands
+namespace Economius.BotRunner.Areas.Shopping.Commands
 {
     public class ShowServerShopCommand : IBotCommand
     {

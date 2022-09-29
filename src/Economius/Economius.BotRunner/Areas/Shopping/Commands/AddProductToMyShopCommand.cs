@@ -1,14 +1,16 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Commons;
 
-namespace Economius.BotRunner.Areas.Shops.Commands
+namespace Economius.BotRunner.Areas.Shopping.Commands
 {
-    public class RemoveProductFromMyShopCommand : IBotCommand
+    public class AddProductToMyShopCommand : IBotCommand
     {
-        public const string CommandName = "remove-product-from-my-shop";
+        public const string CommandName = "add-product-to-my-shop";
 
         public string Name { get; set; }
         public const string Param_Name = "name";
+        public long Price { get; set; }
+        public const string Param_Price = "price";
 
         public static SlashCommandProperties CreateCommandInfo()
         {
@@ -19,6 +21,11 @@ namespace Economius.BotRunner.Areas.Shops.Commands
                     .WithName(Param_Name)
                     .WithDescription("Product name.")
                     .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName(Param_Price)
+                    .WithDescription("Product price.")
+                    .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(true))
                 .Build();
         }

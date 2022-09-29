@@ -51,6 +51,29 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
             return new TransactionViewModel(fromUserId, toUserId, transactionCommand.Amount, transactionCommand.Comment);
         }
 
+        public async Task<IViewModel> TransactionFromServerCommand(SocketSlashCommand rawCommand, TransactionFromServerCommand transactionFromServerCommand)
+        {
+            var serverId = rawCommand.GuildId!.Value;
+            var toUserId = transactionFromServerCommand.ToUser.Id;
+
+            var fromUserWallet = this.queryBus.Execute(new GetWalletQuery(userServerPair: (serverId, 0))).Wallet;
+            if (fromUserWallet.Balance < transactionFromServerCommand.Amount)
+            {
+                return new ErrorViewModel($"Server has not enough balance in wallet.");
+            }
+
+            // todo generate by outside template
+            var comment = $"{transactionFromServerCommand.Comment}\n\nAction performed by user <@{rawCommand.User.Id}>.";
+            var command = new CreateTransactionCommand(serverId, 0, toUserId, transactionFromServerCommand.Amount, comment);
+            await this.commandBus.ExecuteAsync(command);
+
+            //todo performance
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, 0));
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, toUserId));
+
+            return new TransactionViewModel(0, toUserId, transactionFromServerCommand.Amount, comment);
+        }
+
         public async Task<IViewModel> IncreaseServerBalance(SocketSlashCommand rawCommand, IncreaseServerBalanceCommand increaseServerBalanceCommand)
         {
             var serverId = rawCommand.GuildId!.Value;
@@ -65,6 +88,7 @@ namespace Economius.BotRunner.Areas.Payments.Controllers
             await this.commandBus.ExecuteAsync(command);
 
             await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, 0));
+
             return new TransactionViewModel(0, 0, increaseServerBalanceCommand.Amount, comment);
         }
     }

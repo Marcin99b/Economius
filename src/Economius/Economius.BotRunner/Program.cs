@@ -42,10 +42,13 @@ namespace Economius.BotRunner
             var onEventActions = types
                 .Where(x => x.IsAssignableTo(typeof(IOnEventAction)))
                 .ToArray();
-            foreach (var onEventActionType in onEventActions)
+
+            var eventRunners = onEventActions
+                .Select(x => (IOnEventAction)container.Resolve(x))
+                .OrderBy(x => (int)x.Order);
+            foreach (var eventRunner in eventRunners)
             {
-                var instance = (IOnEventAction)container.Resolve(onEventActionType);
-                runner.ConfigureClient(x => instance.Configure(x));
+                runner.ConfigureClient(x => eventRunner.Configure(x));
             }
 
             return runner.Run(token);

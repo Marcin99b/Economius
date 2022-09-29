@@ -2,42 +2,34 @@
 using Discord.Rest;
 using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
+using Economius.BotRunner.Areas.Payments.OnEventActions;
 using Economius.Cqrs;
-using Economius.Domain.Configurations;
-using Economius.Domain.Configurations.Cqrs;
+using Economius.Domain.Payments;
 using Economius.Domain.Payments.Cqrs;
-using MongoDB.Driver.Core.Servers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Economius.Domain.Shopping.Cqrs;
 
-namespace Economius.BotRunner.Areas.Payments.OnEventActions
+namespace Economius.BotRunner.Areas.Shops.OnEventActions
 {
-    public interface ICreateWalletsOnEventAction : IOnEventAction
+    public interface ICreateShopsOnEventAction : IOnEventAction
     {
         Task Run(DiscordSocketClient client);
         Task Run(DiscordSocketClient client, SocketGuild guild);
         Task Run(DiscordSocketClient client, ulong serverId, ulong userId);
     }
 
-    public class CreateWalletsOnEventAction : ICreateWalletsOnEventAction
+    public class CreateShopsOnEventAction : ICreateWalletsOnEventAction
     {
         private readonly ICommandBus commandBus;
         private readonly IQueryBus queryBus;
 
-        public CreateWalletsOnEventAction(ICommandBus commandBus, IQueryBus queryBus)
+        public CreateShopsOnEventAction(ICommandBus commandBus, IQueryBus queryBus)
         {
             this.commandBus = commandBus;
             this.queryBus = queryBus;
         }
 
-        public IOnEventActionOrder Order => IOnEventActionOrder.Immediate;
+        public IOnEventActionOrder Order => IOnEventActionOrder.AfterFirstGroup;
 
-        //todo run after setup
-        //todo run after command
         public void Configure(DiscordSocketClient client)
         {
             client.JoinedGuild += guild => this.Run(client, guild);
@@ -57,8 +49,7 @@ namespace Economius.BotRunner.Areas.Payments.OnEventActions
 
         public async Task Run(DiscordSocketClient client, SocketGuild guild)
         {
-            //setup server wallet
-            await this.Run(client, guild.Id, 0);
+            await this.Run(client, guild.Id, 0);//server shop
 
             var users = await guild.GetUsersAsync().FlattenAsync();
             foreach (var user in users)
@@ -69,12 +60,29 @@ namespace Economius.BotRunner.Areas.Payments.OnEventActions
 
         public async Task Run(DiscordSocketClient client, ulong serverId, ulong userId)
         {
-            var foundWallet = this.queryBus.Execute(new GetWalletQuery(userServerPair: (serverId, userId))).Wallet;
-            if(foundWallet != null)
+            var foundShop = this.queryBus.Execute(new GetShopQuery(serverId, userId)).Shop;
+            if(foundShop != null)
             {
                 return;
             }
-            var command = new CreateWalletCommand(serverId, userId);
+            int i = 0;
+            Wallet? wallet = null;
+            while (wallet == null)
+            {
+                try
+                {
+                    wallet = this.queryBus.Execute(new GetWalletQuery(userServerPair: (serverId, userId))).Wallet;
+                }
+                catch (Exception ex)
+                {
+                    if (i >= 3)
+                    {
+                        throw new Exception($"Wallet for server {serverId} user {userId} is not generated. Cannot create shop.", ex);
+                    }
+                    Thread.Sleep(1000);
+                }
+            }
+            var command = new CreateShopCommand(wallet.Id, serverId, userId);
             await this.commandBus.AddToSingleThreadQueue(command);
         }
     }

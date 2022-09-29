@@ -20,45 +20,50 @@ namespace Economius.BotRunner.Areas.Shops.Controllers
     {
         public async Task<IViewModel> AddProductToMyShop(SocketSlashCommand rawCommand, AddProductToMyShopCommand command)
         {
-            var userId = rawCommand.User.Id;
-
             await Task.CompletedTask;
-            return new SuccessViewModel($"Product {command.Name} with price {command.Price} added to <@{userId}> shop.");
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> AddProductToServerShop(SocketSlashCommand rawCommand, AddProductToServerShopCommand command)
+        public async Task<IViewModel> AddProductToServerShop(SocketSlashCommand rawCommand, AddProductToServerShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> BuyFromServerShop(SocketSlashCommand rawCommand, BuyFromServerShopCommand command)
+        public async Task<IViewModel> BuyFromServerShop(SocketSlashCommand rawCommand, BuyFromServerShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> BuyFromUserShop(SocketSlashCommand rawCommand, BuyFromUserShopCommand command)
+        public async Task<IViewModel> BuyFromUserShop(SocketSlashCommand rawCommand, BuyFromUserShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> RemoveProductFromMyShop(SocketSlashCommand rawCommand, RemoveProductFromMyShopCommand command)
+        public async Task<IViewModel> RemoveProductFromMyShop(SocketSlashCommand rawCommand, RemoveProductFromMyShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> RemoveProductFromServerShop(SocketSlashCommand rawCommand, RemoveProductFromServerShopCommand command)
+        public async Task<IViewModel> RemoveProductFromServerShop(SocketSlashCommand rawCommand, RemoveProductFromServerShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> ShowServerShop(SocketSlashCommand rawCommand, ShowServerShopCommand command)
+        public async Task<IViewModel> ShowServerShop(SocketSlashCommand rawCommand, ShowServerShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
 
-        public Task<IViewModel> ShowUserShop(SocketSlashCommand rawCommand, ShowUserShopCommand command)
+        public async Task<IViewModel> ShowUserShop(SocketSlashCommand rawCommand, ShowUserShopCommand command)
         {
-            return null;
+            await Task.CompletedTask;
+            return new ErrorViewModel("Command not implemented.");
         }
     }
 }

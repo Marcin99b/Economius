@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
+using Economius.BotRunner.Areas.Payments.Views.Models;
 
 namespace Economius.BotRunner.Areas.Payments.Views
 {

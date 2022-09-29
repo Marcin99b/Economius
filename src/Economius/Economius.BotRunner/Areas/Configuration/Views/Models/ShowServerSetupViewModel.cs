@@ -1,6 +1,6 @@
 ﻿using Economius.BotRunner.Areas.Commons;
 
-namespace Economius.BotRunner.Areas.Configuration.Views
+namespace Economius.BotRunner.Areas.Configuration.Views.Models
 {
     public class ShowServerSetupViewModel : IViewModel
     {

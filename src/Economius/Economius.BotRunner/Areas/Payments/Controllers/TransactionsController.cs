@@ -2,6 +2,7 @@
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.Commands;
 using Economius.BotRunner.Areas.Payments.Views;
+using Economius.BotRunner.Areas.Payments.Views.Models;
 using Economius.Cqrs;
 using Economius.Domain.Payments.Cqrs;
 using System;

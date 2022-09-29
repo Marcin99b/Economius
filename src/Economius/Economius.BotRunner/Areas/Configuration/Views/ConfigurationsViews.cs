@@ -2,6 +2,7 @@
 using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Configuration.Commands;
+using Economius.BotRunner.Areas.Configuration.Views.Models;
 using Economius.Domain.Configurations;
 using System;
 using System.Collections.Generic;

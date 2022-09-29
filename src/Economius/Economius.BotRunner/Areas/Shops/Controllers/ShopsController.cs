@@ -18,9 +18,12 @@ namespace Economius.BotRunner.Areas.Shops.Controllers
 
     public class ShopsController : IShopsController
     {
-        public Task<IViewModel> AddProductToMyShop(SocketSlashCommand rawCommand, AddProductToMyShopCommand command)
+        public async Task<IViewModel> AddProductToMyShop(SocketSlashCommand rawCommand, AddProductToMyShopCommand command)
         {
-            return null;
+            var userId = rawCommand.User.Id;
+
+            await Task.CompletedTask;
+            return new SuccessViewModel($"Product {command.Name} with price {command.Price} added to <@{userId}> shop.");
         }
 
         public Task<IViewModel> AddProductToServerShop(SocketSlashCommand rawCommand, AddProductToServerShopCommand command)

@@ -1,6 +1,6 @@
 ﻿using Economius.BotRunner.Areas.Commons;
 
-namespace Economius.BotRunner.Areas.Payments.Views
+namespace Economius.BotRunner.Areas.Payments.Views.Models
 {
     public class ShowWalletViewModel : IViewModel
     {

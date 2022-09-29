@@ -2,6 +2,7 @@
 using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.Commands;
+using Economius.BotRunner.Areas.Payments.Views.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

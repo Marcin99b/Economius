@@ -4,7 +4,13 @@ namespace Economius.BotRunner.Areas.Shops.Views.Models
 {
     public class AddProductToMyShopViewModel : IViewModel
     {
-        public object Name { get; internal set; }
-        public object Price { get; internal set; }
+        public string Name { get; }
+        public long Price { get; }
+
+        public AddProductToMyShopViewModel(string name, long price)
+        {
+            this.Name = name;
+            this.Price = price;
+        }
     }
 }

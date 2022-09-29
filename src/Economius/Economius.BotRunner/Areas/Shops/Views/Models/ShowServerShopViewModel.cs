@@ -5,6 +5,11 @@ namespace Economius.BotRunner.Areas.Shops.Views.Models
 {
     public class ShowServerShopViewModel : IViewModel
     {
-        public IEnumerable<Product> Products { get; internal set; }
+        public IEnumerable<Product> Products { get; }
+
+        public ShowServerShopViewModel(IEnumerable<Product> products)
+        {
+            this.Products = products;
+        }
     }
 }

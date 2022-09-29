@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Configuration.Commands;
 using Economius.BotRunner.Areas.Payments.Commands;
+using Economius.BotRunner.Areas.Shops.Commands;
 
 namespace Economius.BotRunner
 {
@@ -24,6 +25,15 @@ namespace Economius.BotRunner
             //Transactions
             TransactionCommand.CreateCommandInfo(),
             IncreaseServerBalanceCommand.CreateCommandInfo(),
+            //Shops
+            AddProductToMyShopCommand.CreateCommandInfo(),
+            AddProductToServerShopCommand.CreateCommandInfo(),
+            BuyFromServerShopCommand.CreateCommandInfo(),
+            BuyFromUserShopCommand.CreateCommandInfo(),
+            RemoveProductFromMyShopCommand.CreateCommandInfo(),
+            RemoveProductFromServerShopCommand.CreateCommandInfo(),
+            ShowServerShopCommand.CreateCommandInfo(),
+            ShowUserShopCommand.CreateCommandInfo(),
         };
     }
 }

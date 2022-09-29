@@ -20,7 +20,7 @@ namespace Economius.BotRunner.Areas.Shops.Commands
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName(Param_Name)
                     .WithDescription("Product name.")
-                    .WithType(ApplicationCommandOptionType.User)
+                    .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
                 .AddOption(new SlashCommandOptionBuilder()
                     .WithName(Param_Price)

@@ -31,7 +31,7 @@ namespace Economius.Domain.Payments.Cqrs
                 .Where(x => 
                     x.ServerId == command.ServerId 
                     && x.ToUserId == command.UserId);
-
+            //it should calculate only selected period of time, for example one hour, to avoid poor performance
             var difference = this.transactionsSumCalculator.Difference(sentTransactions, receivedTransactions);
 
             var wallet = session.Get<Wallet>().First(x => x.ServerId == command.ServerId && x.UserId == command.UserId);

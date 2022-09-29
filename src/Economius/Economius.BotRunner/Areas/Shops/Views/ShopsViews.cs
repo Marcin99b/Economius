@@ -3,6 +3,7 @@ using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Payments.Commands;
 using Economius.BotRunner.Areas.Shops.Views.Models;
+using Economius.Domain.Shopping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,15 +37,15 @@ namespace Economius.BotRunner.Areas.Shops.Views
         {
             var embed = this.embedBuildersFactory
                 .CreateDefaultEmbedBuilder()
-                .WithTitle("Wallet")
+                .WithTitle("Product added to your shop")
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName(ShowWalletCommand.Param_User) //todo translation
-                        .WithValue(this.GetUserText(model.UserId)).WithIsInline(true),
+                        .WithName("name") //todo translation
+                        .WithValue(model.Name).WithIsInline(true),
                     new EmbedFieldBuilder()
-                        .WithName("balance")
-                        .WithValue(model.Balance).WithIsInline(true),
+                        .WithName("price")
+                        .WithValue(model.Price).WithIsInline(true),
                 })
                 .Build();
 
@@ -53,37 +54,131 @@ namespace Economius.BotRunner.Areas.Shops.Views
 
         public Task AddProductToServerShopView(SocketSlashCommand rawCommand, AddProductToServerShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle("Product added to server shop")
+                .WithFields(new[]
+                {
+                    new EmbedFieldBuilder()
+                        .WithName("name") //todo translation
+                        .WithValue(model.Name).WithIsInline(true),
+                    new EmbedFieldBuilder()
+                        .WithName("price")
+                        .WithValue(model.Price).WithIsInline(true),
+                })
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
         }
 
         public Task BuyFromServerShopView(SocketSlashCommand rawCommand, BuyFromServerShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle("Product bought from server shop")
+                .WithFields(new[]
+                {
+                    new EmbedFieldBuilder()
+                        .WithName("name") //todo translation
+                        .WithValue(model.Name).WithIsInline(true),
+                    new EmbedFieldBuilder()
+                        .WithName("price")
+                        .WithValue(model.Price).WithIsInline(true),
+                })
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
         }
 
         public Task BuyFromUserShopView(SocketSlashCommand rawCommand, BuyFromUserShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle($"Product bought from {this.GetUserText(model.ShopOwnerId)} shop")
+                .WithFields(new[]
+                {
+                    new EmbedFieldBuilder()
+                        .WithName("name") //todo translation
+                        .WithValue(model.Name).WithIsInline(true),
+                    new EmbedFieldBuilder()
+                        .WithName("price")
+                        .WithValue(model.Price).WithIsInline(true),
+                })
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
         }
 
         public Task RemoveProductFromMyShop(SocketSlashCommand rawCommand, RemoveProductFromMyShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle("Product removed from your shop")
+                .WithFields(new[]
+                {
+                    new EmbedFieldBuilder()
+                        .WithName("name") //todo translation
+                        .WithValue(model.Name).WithIsInline(true)
+                })
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
         }
 
         public Task RemoveProductFromServerShopView(SocketSlashCommand rawCommand, RemoveProductFromServerShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle("Product removed from server shop")
+                .WithFields(new[]
+                {
+                    new EmbedFieldBuilder()
+                        .WithName("name") //todo translation
+                        .WithValue(model.Name).WithIsInline(true)
+                })
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
         }
 
         public Task ShowServerShopView(SocketSlashCommand rawCommand, ShowServerShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle("Server shop")
+                .WithFields(this.MapProductsToFields(model.Products))
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
         }
 
         public Task ShowUserShopView(SocketSlashCommand rawCommand, ShowUserShopViewModel model)
         {
-            return Task.CompletedTask;
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle($"{this.GetUserText(model.ShopOwnerId)} shop")
+                .WithFields(this.MapProductsToFields(model.Products))
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
+        }
+
+        private EmbedFieldBuilder[] MapProductsToFields(IEnumerable<Product> products)
+        {
+            return products.Select(x => 
+                new EmbedFieldBuilder()
+                    .WithName(x.Name) //todo translation
+                    .WithValue($"Price: {x.Price}").WithIsInline(false))
+            .ToArray();
+        }
+
+        private string GetUserText(ulong id)
+        {
+            if (id == 0)
+            {
+                return "SERVER";
+            }
+            return $"<@{id}>";
         }
     }
 }

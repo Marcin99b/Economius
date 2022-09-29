@@ -1,6 +1,8 @@
 ﻿using Discord.WebSocket;
 using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Shops.Commands;
+using Economius.Cqrs;
+using Economius.Domain.Shopping.Cqrs;
 
 namespace Economius.BotRunner.Areas.Shops.Controllers
 {
@@ -18,6 +20,15 @@ namespace Economius.BotRunner.Areas.Shops.Controllers
 
     public class ShopsController : IShopsController
     {
+        private readonly IQueryBus queryBus;
+        private readonly ICommandBus commandBus;
+
+        public ShopsController(IQueryBus queryBus, ICommandBus commandBus)
+        {
+            this.queryBus = queryBus;
+            this.commandBus = commandBus;
+        }
+
         public async Task<IViewModel> AddProductToMyShop(SocketSlashCommand rawCommand, AddProductToMyShopCommand command)
         {
             await Task.CompletedTask;
@@ -56,6 +67,7 @@ namespace Economius.BotRunner.Areas.Shops.Controllers
 
         public async Task<IViewModel> ShowServerShop(SocketSlashCommand rawCommand, ShowServerShopCommand command)
         {
+            var shop = this.queryBus.Execute(new GetShopQuery(rawCommand.GuildId!.Value, 0)).Shop;
             await Task.CompletedTask;
             return new ErrorViewModel("Command not implemented.");
         }

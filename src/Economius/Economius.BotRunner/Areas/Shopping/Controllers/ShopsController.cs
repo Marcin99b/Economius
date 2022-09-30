@@ -31,19 +31,39 @@ namespace Economius.BotRunner.Areas.Shopping.Controllers
             this.queryBus = queryBus;
             this.commandBus = commandBus;
         }
-        /*
+        
         public async Task<IViewModel> AddProductToMyShop(SocketSlashCommand rawCommand, AddProductToMyShopCommand command)
         {
-            await Task.CompletedTask;
-            return new AddProductToMyShopViewModel();
+            await this.commandBus.ExecuteAsync(
+                new AddProductToShopCommand(
+                    rawCommand.GuildId!.Value, 
+                    rawCommand.User.Id, 
+                    command.Identifier, 
+                    command.Description, 
+                    command.Price));
+
+            return new AddProductToMyShopViewModel(
+                command.Identifier, 
+                command.Description, 
+                command.Price);
         }
 
         public async Task<IViewModel> AddProductToServerShop(SocketSlashCommand rawCommand, AddProductToServerShopCommand command)
         {
-            await Task.CompletedTask;
-            return new AddProductToServerShopViewModel();
-        }
+            await this.commandBus.ExecuteAsync(
+                new AddProductToShopCommand(
+                    rawCommand.GuildId!.Value, 
+                    0, 
+                    command.Identifier, 
+                    command.Description, 
+                    command.Price));
 
+            return new AddProductToServerShopViewModel(
+                command.Identifier, 
+                command.Description, 
+                command.Price);
+        }
+        /*
         public async Task<IViewModel> BuyFromServerShop(SocketSlashCommand rawCommand, BuyFromServerShopCommand command)
         {
             await Task.CompletedTask;
@@ -55,19 +75,28 @@ namespace Economius.BotRunner.Areas.Shopping.Controllers
             await Task.CompletedTask;
             return new BuyFromUserShopViewModel();
         }
-
+        */
         public async Task<IViewModel> RemoveProductFromMyShop(SocketSlashCommand rawCommand, RemoveProductFromMyShopCommand command)
         {
-            await Task.CompletedTask;
-            return new RemoveProductFromMyShopViewModel();
+            await this.commandBus.ExecuteAsync(
+                new RemoveProductFromShopCommand(
+                    rawCommand.GuildId!.Value,
+                    rawCommand.User.Id, 
+                    command.Identifier));
+
+            return new RemoveProductFromMyShopViewModel(command.Identifier);
         }
 
         public async Task<IViewModel> RemoveProductFromServerShop(SocketSlashCommand rawCommand, RemoveProductFromServerShopCommand command)
         {
-            await Task.CompletedTask;
-            return new RemoveProductFromServerShopViewModel();
+            await this.commandBus.ExecuteAsync(
+                new RemoveProductFromShopCommand(
+                    rawCommand.GuildId!.Value,
+                    0,
+                    command.Identifier));
+            return new RemoveProductFromServerShopViewModel(command.Identifier);
         }
-        */
+        
         public Task<IViewModel> ShowServerShop(SocketSlashCommand rawCommand, ShowServerShopCommand command)
         {
             var shop = this.queryBus.Execute(new GetShopQuery(rawCommand.GuildId!.Value, 0)).Shop!;

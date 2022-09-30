@@ -87,6 +87,10 @@ namespace Economius.BotRunner.Areas.Shopping.Controllers
                 $"Product description: {product.Description}");
             await this.commandBus.ExecuteAsync(transactionCommand);
 
+            //todo performance
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, fromUserId));
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, shopOwnerId));
+
             //todo add receipt to user purchase history
             //todo handle bought product if it is possible
             return new BuyFromServerShopViewModel(product.Identifier, product.Identifier, product.Price);
@@ -115,6 +119,10 @@ namespace Economius.BotRunner.Areas.Shopping.Controllers
                 $"Expected price: {command.Price}\n\n" +
                 $"Product description: {product.Description}");
             await this.commandBus.ExecuteAsync(transactionCommand);
+
+            //todo performance
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, fromUserId));
+            await this.commandBus.ExecuteAsync(new RecalculateWalletBalanceCommand(serverId, shopOwnerId));
 
             //todo add receipt to user purchase history
             //todo handle bought product if it is possible

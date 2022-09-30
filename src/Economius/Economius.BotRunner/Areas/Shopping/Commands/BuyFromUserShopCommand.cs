@@ -11,8 +11,8 @@ namespace Economius.BotRunner.Areas.Shopping.Commands
         public const string Param_User = "user";
         public string ProductIdentifier { get; set; }
         public const string Param_ProductIdentifier = "product-identifier";
-        public string Price { get; set; }
-        public const string Param_Price = "product";
+        public long Price { get; set; }
+        public const string Param_Price = "price";
 
         public static SlashCommandProperties CreateCommandInfo()
         {

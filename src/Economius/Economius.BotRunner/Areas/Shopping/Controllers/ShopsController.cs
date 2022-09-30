@@ -3,24 +3,24 @@ using Economius.BotRunner.Areas.Commons;
 using Economius.BotRunner.Areas.Shopping.Commands;
 using Economius.BotRunner.Areas.Shopping.Views.Models;
 using Economius.Cqrs;
+using Economius.Domain.Payments.Cqrs;
 using Economius.Domain.Shopping.Cqrs;
 
 namespace Economius.BotRunner.Areas.Shopping.Controllers
 {
     public interface IShopsController : IController
     {
-        /*
         Task<IViewModel> AddProductToMyShop(SocketSlashCommand rawCommand, AddProductToMyShopCommand command);
         Task<IViewModel> AddProductToServerShop(SocketSlashCommand rawCommand, AddProductToServerShopCommand command);
         Task<IViewModel> BuyFromServerShop(SocketSlashCommand rawCommand, BuyFromServerShopCommand command);
         Task<IViewModel> BuyFromUserShop(SocketSlashCommand rawCommand, BuyFromUserShopCommand command);
         Task<IViewModel> RemoveProductFromMyShop(SocketSlashCommand rawCommand, RemoveProductFromMyShopCommand command);
         Task<IViewModel> RemoveProductFromServerShop(SocketSlashCommand rawCommand, RemoveProductFromServerShopCommand command);
-        */
         Task<IViewModel> ShowServerShop(SocketSlashCommand rawCommand, ShowServerShopCommand command);
         Task<IViewModel> ShowUserShop(SocketSlashCommand rawCommand, ShowUserShopCommand command);
     }
 
+    //todo refactoring
     public class ShopsController : IShopsController
     {
         private readonly IQueryBus queryBus;
@@ -63,19 +63,64 @@ namespace Economius.BotRunner.Areas.Shopping.Controllers
                 command.Description, 
                 command.Price);
         }
-        /*
+        
+        //todo performance
         public async Task<IViewModel> BuyFromServerShop(SocketSlashCommand rawCommand, BuyFromServerShopCommand command)
         {
-            await Task.CompletedTask;
-            return new BuyFromServerShopViewModel();
+            var serverId = rawCommand.GuildId!.Value;
+            var fromUserId = rawCommand.User.Id;
+            var shopOwnerId = 0u;
+            var getProductQueryResult = this.queryBus.Execute(
+                new GetProductFromShopQuery(
+                    serverId,
+                    shopOwnerId, 
+                    command.ProductIdentifier,
+                    command.Price));
+
+            var product = getProductQueryResult.Product;
+
+            var transactionCommand = new CreateTransactionCommand(
+                serverId, fromUserId, shopOwnerId, command.Price, 
+                $"User: <@{fromUserId}>\n" +
+                $"Bought: {product.Identifier}\n" +
+                $"Expected price: {command.Price}\n\n" +
+                $"Product description: {product.Description}");
+            await this.commandBus.ExecuteAsync(transactionCommand);
+
+            //todo add receipt to user purchase history
+            //todo handle bought product if it is possible
+            return new BuyFromServerShopViewModel(product.Identifier, product.Identifier, product.Price);
         }
 
+        //todo performance
+        //todo refactor
         public async Task<IViewModel> BuyFromUserShop(SocketSlashCommand rawCommand, BuyFromUserShopCommand command)
         {
-            await Task.CompletedTask;
-            return new BuyFromUserShopViewModel();
+            var serverId = rawCommand.GuildId!.Value;
+            var fromUserId = rawCommand.User.Id;
+            var shopOwnerId = rawCommand.User.Id;
+            var getProductQueryResult = this.queryBus.Execute(
+                new GetProductFromShopQuery(
+                    serverId,
+                    shopOwnerId,
+                    command.ProductIdentifier,
+                    command.Price));
+
+            var product = getProductQueryResult.Product;
+
+            var transactionCommand = new CreateTransactionCommand(
+                serverId, fromUserId, shopOwnerId, command.Price,
+                $"User: <@{fromUserId}>\n" +
+                $"Bought: {product.Identifier}\n" +
+                $"Expected price: {command.Price}\n\n" +
+                $"Product description: {product.Description}");
+            await this.commandBus.ExecuteAsync(transactionCommand);
+
+            //todo add receipt to user purchase history
+            //todo handle bought product if it is possible
+            return new BuyFromServerShopViewModel(product.Identifier, product.Identifier, product.Price);
         }
-        */
+        
         public async Task<IViewModel> RemoveProductFromMyShop(SocketSlashCommand rawCommand, RemoveProductFromMyShopCommand command)
         {
             await this.commandBus.ExecuteAsync(

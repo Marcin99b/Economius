@@ -5,13 +5,15 @@ namespace Economius.BotRunner.Areas.Shopping.Views.Models
     public class BuyFromUserShopViewModel : IViewModel
     {
         public ulong ShopOwnerId { get; internal set; }
-        public string Name { get; }
+        public string Identifier { get; }
+        public string Description { get; }
         public long Price { get; }
 
-        public BuyFromUserShopViewModel(ulong shopOwnerId, string name, long price)
+        public BuyFromUserShopViewModel(ulong shopOwnerId, string identifier, string description, long price)
         {
             this.ShopOwnerId = shopOwnerId;
-            this.Name = name;
+            this.Identifier = identifier;
+            this.Description = description;
             this.Price = price;
         }
     }

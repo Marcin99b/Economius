@@ -4,11 +4,11 @@ namespace Economius.BotRunner.Areas.Shopping.Views.Models
 {
     public class RemoveProductFromServerShopViewModel : IViewModel
     {
-        public string Name { get; }
+        public string Identifier { get; }
 
-        public RemoveProductFromServerShopViewModel(string name)
+        public RemoveProductFromServerShopViewModel(string identifier)
         {
-            this.Name = name;
+            this.Identifier = identifier;
         }
     }
 }

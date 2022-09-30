@@ -41,11 +41,14 @@ namespace Economius.BotRunner.Areas.Shopping.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName("name") //todo translation
-                        .WithValue(model.Name).WithIsInline(true),
+                        .WithName("identifier") //todo translation
+                        .WithValue(model.Identifier).WithIsInline(false),
+                    new EmbedFieldBuilder()
+                        .WithName("description")
+                        .WithValue(model.Description).WithIsInline(false),
                     new EmbedFieldBuilder()
                         .WithName("price")
-                        .WithValue(model.Price).WithIsInline(true),
+                        .WithValue(model.Price).WithIsInline(false),
                 })
                 .Build();
 
@@ -60,11 +63,14 @@ namespace Economius.BotRunner.Areas.Shopping.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName("name") //todo translation
-                        .WithValue(model.Name).WithIsInline(true),
+                        .WithName("identifier") //todo translation
+                        .WithValue(model.Identifier).WithIsInline(false),
+                    new EmbedFieldBuilder()
+                        .WithName("description")
+                        .WithValue(model.Description).WithIsInline(false),
                     new EmbedFieldBuilder()
                         .WithName("price")
-                        .WithValue(model.Price).WithIsInline(true),
+                        .WithValue(model.Price).WithIsInline(false),
                 })
                 .Build();
 
@@ -79,11 +85,14 @@ namespace Economius.BotRunner.Areas.Shopping.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName("name") //todo translation
-                        .WithValue(model.Name).WithIsInline(true),
+                        .WithName("identifier") //todo translation
+                        .WithValue(model.Identifier).WithIsInline(false),
+                    new EmbedFieldBuilder()
+                        .WithName("description")
+                        .WithValue(model.Description).WithIsInline(false),
                     new EmbedFieldBuilder()
                         .WithName("price")
-                        .WithValue(model.Price).WithIsInline(true),
+                        .WithValue(model.Price).WithIsInline(false),
                 })
                 .Build();
 
@@ -98,11 +107,14 @@ namespace Economius.BotRunner.Areas.Shopping.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName("name") //todo translation
-                        .WithValue(model.Name).WithIsInline(true),
+                        .WithName("identifier") //todo translation
+                        .WithValue(model.Identifier).WithIsInline(false),
+                    new EmbedFieldBuilder()
+                        .WithName("description")
+                        .WithValue(model.Description).WithIsInline(false),
                     new EmbedFieldBuilder()
                         .WithName("price")
-                        .WithValue(model.Price).WithIsInline(true),
+                        .WithValue(model.Price).WithIsInline(false),
                 })
                 .Build();
 
@@ -117,8 +129,8 @@ namespace Economius.BotRunner.Areas.Shopping.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName("name") //todo translation
-                        .WithValue(model.Name).WithIsInline(true)
+                        .WithName("identifier") //todo translation
+                        .WithValue(model.Identifier).WithIsInline(true)
                 })
                 .Build();
 
@@ -133,8 +145,8 @@ namespace Economius.BotRunner.Areas.Shopping.Views
                 .WithFields(new[]
                 {
                     new EmbedFieldBuilder()
-                        .WithName("name") //todo translation
-                        .WithValue(model.Name).WithIsInline(true)
+                        .WithName("identifier") //todo translation
+                        .WithValue(model.Identifier).WithIsInline(true)
                 })
                 .Build();
 
@@ -156,7 +168,8 @@ namespace Economius.BotRunner.Areas.Shopping.Views
         {
             var embed = this.embedBuildersFactory
                 .CreateDefaultEmbedBuilder()
-                .WithTitle($"{this.GetUserText(model.ShopOwnerId)} shop")
+                .WithTitle("User shop")
+                .WithDescription($"Owner: {this.GetUserText(model.ShopOwnerId)}")
                 .WithFields(this.MapProductsToFields(model.Products))
                 .Build();
 
@@ -167,8 +180,8 @@ namespace Economius.BotRunner.Areas.Shopping.Views
         {
             return products.Select(x => 
                 new EmbedFieldBuilder()
-                    .WithName(x.Name) //todo translation
-                    .WithValue($"Price: {x.Price}").WithIsInline(false))
+                    .WithName(x.Identifier)
+                    .WithValue($"Description: {x.Description}\nPrice: {x.Price}").WithIsInline(false))
             .ToArray();
         }
 

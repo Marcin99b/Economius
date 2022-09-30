@@ -4,15 +4,18 @@ namespace Economius.Domain.Shopping
 {
     public class Product
     {
-        public string Name { get; private set; }
+        public string Identifier { get; private set; }
         public long Price { get; private set; }
+        public string Description { get; set; }
 
-        public Product(string name, long price)
+        public Product(string identifier, string description, long price)
         {
-            this.Name = name;
+            this.Identifier = identifier;
+            this.Description = description;
             this.Price = price;
         }
 
+        //todo set description
         internal void SetPrice(Action update, long price)
         {
             if(this.Price == price)
@@ -27,7 +30,7 @@ namespace Economius.Domain.Shopping
         {
             return obj switch
             {
-                Product p => p.Name == this.Name && p.Price == this.Price,
+                Product p => p.Identifier == this.Identifier,
                 _ => false
             };
         }

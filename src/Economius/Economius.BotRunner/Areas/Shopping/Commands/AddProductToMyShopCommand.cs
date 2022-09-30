@@ -7,8 +7,10 @@ namespace Economius.BotRunner.Areas.Shopping.Commands
     {
         public const string CommandName = "add-product-to-my-shop";
 
-        public string Name { get; set; }
-        public const string Param_Name = "name";
+        public string Identifier { get; set; }
+        public const string Param_Identifier = "identifier";
+        public string Description { get; set; }
+        public const string Param_Description = "description";
         public long Price { get; set; }
         public const string Param_Price = "price";
 
@@ -18,8 +20,13 @@ namespace Economius.BotRunner.Areas.Shopping.Commands
                 .WithName(CommandName)
                 .WithDescription("Add product to my shop.")
                 .AddOption(new SlashCommandOptionBuilder()
-                    .WithName(Param_Name)
-                    .WithDescription("Product name.")
+                    .WithName(Param_Identifier)
+                    .WithDescription("Product identifier.")
+                    .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName(Param_Description)
+                    .WithDescription("Product description.")
                     .WithType(ApplicationCommandOptionType.String)
                     .WithRequired(true))
                 .AddOption(new SlashCommandOptionBuilder()

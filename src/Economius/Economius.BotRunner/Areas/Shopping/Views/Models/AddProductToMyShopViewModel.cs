@@ -4,12 +4,14 @@ namespace Economius.BotRunner.Areas.Shopping.Views.Models
 {
     public class AddProductToMyShopViewModel : IViewModel
     {
-        public string Name { get; }
+        public string Identifier { get; }
+        public string Description { get; }
         public long Price { get; }
 
-        public AddProductToMyShopViewModel(string name, long price)
+        public AddProductToMyShopViewModel(string identifier, string description, long price)
         {
-            this.Name = name;
+            this.Identifier = identifier;
+            this.Description = description;
             this.Price = price;
         }
     }

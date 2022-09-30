@@ -33,7 +33,7 @@ namespace Economius.Domain.Shopping
 
         public void AddProduct(Product product)
         {
-            if(this.products.Any(x => x.Name.ToLower() == product.Name.ToLower()))
+            if(this.products.Any(x => x.Identifier.ToLower() == product.Identifier.ToLower()))
             {
                 throw new ArgumentException($"Product already exist in shop");
             }
@@ -41,9 +41,9 @@ namespace Economius.Domain.Shopping
             this.Update();
         }
 
-        public void UpdateProduct(string name, long newPrice)
+        public void UpdateProduct(string identifier, long newPrice)
         {
-            var product = this.products.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            var product = this.products.FirstOrDefault(x => x.Identifier.ToLower() == identifier.ToLower());
             if (product == null)
             {
                 throw new ArgumentException($"Product does not exist in shop");
@@ -51,9 +51,9 @@ namespace Economius.Domain.Shopping
             product.SetPrice(this.Update, newPrice);
         }
 
-        public void RemoveProduct(string name)
+        public void RemoveProduct(string identifier)
         {
-            var product = this.products.FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            var product = this.products.FirstOrDefault(x => x.Identifier.ToLower() == identifier.ToLower());
             if (product == null)
             {
                 throw new ArgumentException($"Product does not exist in shop");

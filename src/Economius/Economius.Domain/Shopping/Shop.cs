@@ -41,14 +41,15 @@ namespace Economius.Domain.Shopping
             this.Update();
         }
 
-        public void UpdateProduct(string identifier, long newPrice)
+        public void UpdateProduct(Product newProduct)
         {
-            var product = this.products.FirstOrDefault(x => x.Identifier.ToLower() == identifier.ToLower());
+            var product = this.products.FirstOrDefault(x => x.Identifier.ToLower() == newProduct.Identifier.ToLower());
             if (product == null)
             {
                 throw new ArgumentException($"Product does not exist in shop");
             }
-            product.SetPrice(this.Update, newPrice);
+            product.SetDescription(this.Update, newProduct.Description);
+            product.SetPrice(this.Update, newProduct.Price);
         }
 
         public void RemoveProduct(string identifier)

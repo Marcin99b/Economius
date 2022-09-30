@@ -15,7 +15,16 @@ namespace Economius.Domain.Shopping
             this.Price = price;
         }
 
-        //todo set description
+        internal void SetDescription(Action update, string description)
+        {
+            if (this.Description == description)
+            {
+                return;
+            }
+            this.Description = description;
+            update.Invoke();
+        }
+
         internal void SetPrice(Action update, long price)
         {
             if(this.Price == price)

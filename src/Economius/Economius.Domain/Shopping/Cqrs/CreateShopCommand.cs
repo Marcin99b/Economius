@@ -1,4 +1,5 @@
 ﻿using Economius.Cqrs;
+using Economius.Domain.Payments;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -7,8 +7,10 @@ namespace Economius.BotRunner.Areas.Shopping.Commands
     {
         public const string CommandName = "buy-from-server-shop";
 
-        public string Product { get; set; }
-        public const string Param_Product = "product";
+        public string ProductIdentifier { get; set; }
+        public const string Param_ProductIdentifier = "product-identifier";
+        public string Price { get; set; }
+        public const string Param_Price = "product";
 
         public static SlashCommandProperties CreateCommandInfo()
         {
@@ -16,9 +18,14 @@ namespace Economius.BotRunner.Areas.Shopping.Commands
                 .WithName(CommandName)
                 .WithDescription("Buy from server shop.")
                 .AddOption(new SlashCommandOptionBuilder()
-                    .WithName(Param_Product)
+                    .WithName(Param_ProductIdentifier)
                     .WithDescription("Select product.")
                     .WithType(ApplicationCommandOptionType.String)
+                    .WithRequired(true))
+                .AddOption(new SlashCommandOptionBuilder()
+                    .WithName(Param_Price)
+                    .WithDescription("Put price to confirm.")
+                    .WithType(ApplicationCommandOptionType.Integer)
                     .WithRequired(true))
                 .Build();
         }

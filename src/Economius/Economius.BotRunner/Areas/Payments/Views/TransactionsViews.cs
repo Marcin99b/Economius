@@ -8,6 +8,7 @@ namespace Economius.BotRunner.Areas.Payments.Views
     public interface ITransactionsViews : IViewsService
     {
         Task TransactionView(SocketSlashCommand rawCommand, TransactionViewModel model);
+        Task TransactionsView(SocketSlashCommand rawCommand, TransactionsViewModel model);
     }
 
     public class TransactionsViews : ITransactionsViews
@@ -42,6 +43,40 @@ namespace Economius.BotRunner.Areas.Payments.Views
                 .Build();
 
             return rawCommand.RespondAsync(embed: embed);
+        }
+
+        public Task TransactionsView(SocketSlashCommand rawCommand, TransactionsViewModel model)
+        {
+            var fields = this.GenerateTransactionsAsFields(model.transactionViewModels).ToArray();
+            var embed = this.embedBuildersFactory
+                .CreateDefaultEmbedBuilder()
+                .WithTitle("Transactions")
+                .WithFields(fields)
+                .Build();
+
+            return rawCommand.RespondAsync(embed: embed);
+        }
+
+        private IEnumerable<EmbedFieldBuilder> GenerateTransactionsAsFields(IEnumerable<TransactionViewModel> transactionViewModels)
+        {
+            byte i = 0;
+            foreach (var item in transactionViewModels)
+            {
+                if(i != 0 && i % 2 == 0)
+                {
+                    yield return new EmbedFieldBuilder().WithName("\u200b").WithValue("\u200b").WithIsInline(false);
+                }
+                yield return new EmbedFieldBuilder()
+                    .WithName("ID: " + item.TransactionId.ToString())
+                    .WithValue(
+                        $"From: {this.GetUserText(item.FromUserId)}\n" +
+                        $"To: {this.GetUserText(item.ToUserId)}\n" +
+                        $"Amount: {item.Amount}\n" +
+                        $"Date: {item.CreatedAt}\n" +
+                        $"Comment: {item.Comment}")
+                    .WithIsInline(true);
+                i++;
+            }
         }
 
         private string GetUserText(ulong id)

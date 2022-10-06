@@ -4,11 +4,11 @@ namespace Economius.Domain.Payments.Cqrs
 {
     public class GetWalletQueryResult : IQueryResult
     {
-        public Wallet Wallet { get; }
+        public Wallet? Wallet { get; }
 
-        public GetWalletQueryResult(Wallet wallet)
+        public GetWalletQueryResult(Wallet? wallet)
         {
-            this.Wallet = wallet;
+            this.Wallet = wallet!;
         }
     }
 }

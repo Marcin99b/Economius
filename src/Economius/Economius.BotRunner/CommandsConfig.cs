@@ -24,6 +24,7 @@ namespace Economius.BotRunner
             ShowServerWalletCommand.CreateCommandInfo(),
             //Transactions
             TransactionCommand.CreateCommandInfo(),
+            ShowLatestTransactionsCommand.CreateCommandInfo(),
             IncreaseServerBalanceCommand.CreateCommandInfo(),
             //Shops
             AddProductToMyShopCommand.CreateCommandInfo(),

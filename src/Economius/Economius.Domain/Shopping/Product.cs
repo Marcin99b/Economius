@@ -1,4 +1,5 @@
 ﻿using Economius.Infrastructure.Database.Abstraction;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Economius.Domain.Shopping
 {

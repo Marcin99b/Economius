@@ -17,7 +17,18 @@ namespace Economius.Domain.Games.TicTacToe
 
         public bool Compare(IStageState obj)
         {
-            throw new NotImplementedException();
+            if(obj is TicTacToeStageState stage)
+            {
+                if(this.StageLevel == stage.StageLevel)
+                {
+                    return true;
+                }
+                if(this.Table.SequenceEqual(stage.Table))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

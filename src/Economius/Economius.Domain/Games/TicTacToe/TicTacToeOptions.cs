@@ -1,4 +1,4 @@
-﻿namespace Economius.Domain.Commons.MultiStages
+﻿namespace Economius.Domain.Games.TicTacToe
 {
     public enum TicTacToeOptions
     {

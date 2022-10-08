@@ -1,4 +1,6 @@
-﻿namespace Economius.Domain.Commons.MultiStages
+﻿using Economius.Domain.Commons.MultiStages;
+
+namespace Economius.Domain.Games.TicTacToe
 {
     public class TicTacToeStageState : IStageState
     {

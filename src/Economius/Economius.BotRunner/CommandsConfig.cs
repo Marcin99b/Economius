@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Economius.BotRunner.Areas.Configuration.Commands;
+using Economius.BotRunner.Areas.Games.TicTacToe;
 using Economius.BotRunner.Areas.Payments.Commands;
 using Economius.BotRunner.Areas.Shopping.Commands;
 
@@ -35,6 +36,8 @@ namespace Economius.BotRunner
             RemoveProductFromServerShopCommand.CreateCommandInfo(),
             ShowServerShopCommand.CreateCommandInfo(),
             ShowUserShopCommand.CreateCommandInfo(),
+            //Games
+            StartTicTacToeCommand.CreateCommandInfo(),
         };
     }
 }

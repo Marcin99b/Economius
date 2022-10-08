@@ -13,8 +13,8 @@ namespace Economius.BotRunner
     {
         public static Task Main()
         {
-            var token = Environment.GetEnvironmentVariable("discord_token")!;
-            var mongoConnectionString = Environment.GetEnvironmentVariable("economius_mongodb")!;
+            var token = Environment.GetEnvironmentVariable("discord_token", EnvironmentVariableTarget.User)!;
+            var mongoConnectionString = Environment.GetEnvironmentVariable("economius_mongodb", EnvironmentVariableTarget.User)!;
             var container = new ContainerModule(mongoConnectionString)
                 .GetBuilder()
                 .Build();

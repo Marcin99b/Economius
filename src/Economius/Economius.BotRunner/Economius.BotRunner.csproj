@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Economius.Domain\Economius.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Games\" />
-  </ItemGroup>
-
 </Project>
